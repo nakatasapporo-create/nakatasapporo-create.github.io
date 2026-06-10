@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="ja" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Web Apps Portfolio - アプリケーション一覧</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts & Font Awesome for Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'Noto Sans JP', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0f7ff',
+              100: '#e0effe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', 'Noto Sans JP', sans-serif;
+    }
+    /* カスタムスクロールバー */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .dark ::-webkit-scrollbar-track {
+      background: #1f2937;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .dark ::-webkit-scrollbar-thumb {
+      background: #4b5563;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 min-h-full transition-colors duration-300 flex flex-col">
+
+  <!-- ヘッダー -->
+  <header class="sticky top-0 z-40 w-full border-b border-slate-200/80 bg-slate-50/80 backdrop-blur dark:border-slate-800/80 dark:bg-slate-900/80 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+          <i class="fa-solid fa-cubes text-xl"></i>
+        </div>
+        <div>
+          <h1 class="text-lg font-bold tracking-tight bg-gradient-to-r from-blue-600 to-indigo-500 dark:from-blue-400 dark:to-indigo-300 bg-clip-text text-transparent">AppSuite</h1>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Web App Collection</p>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <!-- 管理者モード切り替え -->
+        <button id="admin-toggle" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors flex items-center space-x-1" title="管理モードを切り替え">
+          <i class="fa-solid fa-gear"></i>
+          <span class="hidden sm:inline">管理メニュー</span>
+        </button>
+        <!-- ライト/ダークモードトグル -->
+        <button id="theme-toggle" class="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="テーマ切り替え">
+          <i id="theme-toggle-dark-icon" class="hidden fa-solid fa-moon text-lg"></i>
+          <i id="theme-toggle-light-icon" class="hidden fa-solid fa-sun text-lg"></i>
+        </button>
+        <!-- GitHub リンク -->
+        <a href="#" class="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors" title="GitHub">
+          <i class="fa-brands fa-github text-xl"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- メインコンテンツ -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- 管理者コントロールパネル（トグルで表示・非表示） -->
+    <div id="admin-panel" class="hidden bg-slate-100 dark:bg-slate-800/60 rounded-2xl border-2 border-dashed border-slate-300 dark:border-slate-700 p-6 mb-8 transition-all duration-300">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-200 dark:border-slate-700">
+        <div>
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+            <i class="fa-solid fa-screwdriver-wrench text-blue-600 dark:text-blue-400"></i>
+            <span>アプリ登録・編集システム</span>
+          </h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">ここで登録したデータはブラウザのLocalStorageに安全に保存され、コードを書き換えずに即座に反映されます。</p>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <button id="btn-export-json" class="px-3 py-1.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 rounded-lg text-xs font-semibold text-slate-700 dark:text-slate-200 transition-colors flex items-center space-x-1">
+            <i class="fa-solid fa-file-export"></i>
+            <span>JSON出力 (コード貼付用)</span>
+          </button>
+          <button id="btn-reset-data" class="px-3 py-1.5 bg-red-50 hover:bg-red-100 dark:bg-red-950/30 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400 rounded-lg text-xs font-semibold transition-colors flex items-center space-x-1">
+            <i class="fa-solid fa-trash-arrow-up"></i>
+            <span>初期状態に戻す</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- アプリ登録・編集フォーム -->
+      <form id="app-form" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <input type="hidden" id="form-edit-id" value="">
+        
+        <div class="space-y-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">アプリ名 <span class="text-red-500">*</span></label>
+            <input type="text" id="form-title" required placeholder="例: マインドマップツール" class="w-full px-3 py-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">ファイルパス (リンクURL) <span class="text-red-500">*</span></label>
+            <input type="text" id="form-path" required placeholder="例: mindmap.html" class="w-full px-3 py-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">カテゴリ</label>
+              <select id="form-category" class="w-full px-3 py-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="utility">便利ツール</option>
+                <option value="game">ゲーム</option>
+                <option value="creative">クリエイティブ</option>
+                <option value="ai">AIアプリ</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">リリース月</label>
+              <input type="text" id="form-release" placeholder="例: 2026-06" class="w-full px-3 py-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">説明文 <span class="text-red-500">*</span></label>
+            <textarea id="form-description" required rows="2" placeholder="アプリの特徴や使い方を記載..." class="w-full px-3 py-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">フォントオーサム・アイコン</label>
+              <input type="text" id="form-icon" placeholder="例: fa-solid fa-brain" class="w-full px-3 py-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">バナー配色パターン</label>
+              <select id="form-gradient" class="w-full px-3 py-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="from-blue-600 to-indigo-600">ブルー & パープル</option>
+                <option value="from-purple-600 to-indigo-600">パープル & ダークブルー</option>
+                <option value="from-emerald-500 to-teal-600">エメラルド & ティール</option>
+                <option value="from-rose-500 to-orange-500">ローズ & オレンジ</option>
+                <option value="from-amber-500 to-red-500">アンバー & レッド</option>
+                <option value="from-indigo-500 to-pink-500">インディゴ & ピンク</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-3 flex flex-col justify-between">
+          <div>
+            <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">タグ (カンマ区切り)</label>
+            <input type="text" id="form-tags" placeholder="例: Utility, React, Canvas" class="w-full px-3 py-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+          </div>
+          <div class="flex space-x-2 pt-2">
+            <button type="button" id="btn-cancel-edit" class="flex-1 py-2 border border-slate-200 dark:border-slate-700 hover:bg-slate-200/50 dark:hover:bg-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl text-xs font-semibold transition-all">
+              キャンセル
+            </button>
+            <button type="submit" id="btn-submit-app" class="flex-[2] py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold shadow-md shadow-blue-500/15 transition-all">
+              アプリを追加する
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- ヒーローセクション -->
+    <div class="text-center md:text-left md:flex md:items-center md:justify-between border-b border-slate-200 dark:border-slate-800 pb-8 mb-8">
+      <div class="max-w-2xl">
+        <h2 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
+          マイ・Webアプリケーション集
+        </h2>
+        <p class="mt-3 text-lg text-slate-500 dark:text-slate-400">
+          これまでに開発した自作のWEBツール、ゲーム、シミュレーターを1つに集約しました。すべてブラウザ上で直接動作します。気になるアプリを起動してみてください。
+        </p>
+      </div>
+      <div class="mt-6 md:mt-0 flex flex-wrap justify-center gap-4 text-sm font-medium">
+        <div class="px-4 py-2 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex items-center space-x-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span id="app-count-badge" class="text-slate-600 dark:text-slate-300 font-medium">ロード中...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- コントロールパネル: 検索・フィルター -->
+    <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-5 mb-8 shadow-sm transition-all duration-300">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <!-- 検索バー -->
+        <div class="relative flex-grow max-w-lg">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </span>
+          <input type="text" id="search-input" placeholder="アプリ名、説明、技術タグで検索..." 
+            class="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all text-slate-900 dark:text-white">
+        </div>
+
+        <!-- フィルタカテゴリ -->
+        <div class="flex flex-wrap items-center gap-2" id="filter-buttons-container">
+          <!-- JSで動的にフィルタを生成 -->
+        </div>
+      </div>
+    </div>
+
+    <!-- アプリ一覧グリッド -->
+    <div id="apps-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- スケルトンローダー（JSロード前） -->
+      <div class="animate-pulse bg-white dark:bg-slate-800 rounded-2xl h-80 border border-slate-200 dark:border-slate-700"></div>
+      <div class="animate-pulse bg-white dark:bg-slate-800 rounded-2xl h-80 border border-slate-200 dark:border-slate-700"></div>
+      <div class="animate-pulse bg-white dark:bg-slate-800 rounded-2xl h-80 border border-slate-200 dark:border-slate-700"></div>
+    </div>
+
+    <!-- 該当アプリなしの表示 -->
+    <div id="no-results" class="hidden text-center py-16">
+      <div class="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4">
+        <i class="fa-solid fa-cube text-slate-400 text-2xl"></i>
+      </div>
+      <h3 class="text-lg font-medium text-slate-900 dark:text-white">見つかりませんでした</h3>
+      <p class="text-slate-500 dark:text-slate-400 mt-1">検索条件やフィルターを変更してみてください。</p>
+    </div>
+
+  </main>
+
+  <!-- フッター -->
+  <footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40 py-8 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:flex md:items-center md:justify-between text-sm text-slate-500 dark:text-slate-400">
+      <p>© 2026 AppSuite. All rights reserved. Created with Passion.</p>
+      <div class="flex justify-center space-x-6 mt-4 md:mt-0">
+        <a href="#" class="hover:text-slate-800 dark:hover:text-white transition-colors">プライバシー</a>
+        <a href="#" class="hover:text-slate-800 dark:hover:text-white transition-colors">免責事項</a>
+        <a href="#" class="hover:text-slate-800 dark:hover:text-white transition-colors">お問い合わせ</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- アプリ詳細ポップアップ（モーダル） -->
+  <div id="app-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden transition-opacity duration-300 opacity-0">
+    <div class="bg-white dark:bg-slate-800 w-full max-w-2xl rounded-2xl shadow-xl overflow-hidden transform scale-95 transition-transform duration-300">
+      <div class="relative">
+        <!-- ヘッダー画像/グラデーションプレースホルダー -->
+        <div id="modal-banner" class="h-40 bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center text-white">
+          <i id="modal-banner-icon" class="fa-solid fa-cubes text-6xl opacity-35"></i>
+        </div>
+        <button id="modal-close" class="absolute top-4 right-4 bg-slate-900/40 hover:bg-slate-900/60 text-white rounded-full p-2 transition-all" aria-label="閉じる">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+      
+      <div class="p-6">
+        <div class="flex flex-wrap gap-2 mb-3" id="modal-tags">
+          <!-- タグを動的に挿入 -->
+        </div>
+        <h3 id="modal-title" class="text-2xl font-bold text-slate-900 dark:text-white mb-2">アプリタイトル</h3>
+        <p id="modal-description" class="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">アプリの詳細な説明がここに入ります。</p>
+        
+        <div class="border-t border-slate-100 dark:border-slate-700 pt-5 flex items-center justify-between">
+          <div>
+            <span class="text-xs text-slate-400 block">動作要件</span>
+            <span id="modal-requirement" class="text-sm text-slate-600 dark:text-slate-400 font-medium">モダンブラウザ対応</span>
+          </div>
+          <div class="flex space-x-3">
+            <button id="modal-close-btn" class="px-4 py-2 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">閉じる</button>
+            <a id="modal-launch-link" href="#" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-medium shadow-md shadow-blue-500/10 flex items-center space-x-2 transition-all">
+              <span>アプリを起動する</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JSONエクスポート用モーダル -->
+  <div id="export-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden transition-opacity duration-300 opacity-0">
+    <div class="bg-white dark:bg-slate-800 w-full max-w-xl rounded-2xl shadow-xl overflow-hidden p-6">
+      <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 flex items-center space-x-2">
+        <i class="fa-solid fa-code text-indigo-500"></i>
+        <span>JSONデータ出力</span>
+      </h3>
+      <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">
+        このコード（myApps配列の中身）をコピーし、HTML内の <code>const defaultApps = [...]</code> の位置にそのまま貼り付けることで、永続的なデータベースとしてコードに固定できます。
+      </p>
+      <textarea id="export-textarea" readonly rows="8" class="w-full p-3 font-mono text-xs bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-800 dark:text-slate-200 focus:outline-none"></textarea>
+      
+      <div class="mt-4 flex justify-between items-center">
+        <span id="copy-success-message" class="text-xs text-emerald-500 font-semibold opacity-0 transition-opacity duration-300">コピーしました！</span>
+        <div class="flex space-x-2">
+          <button id="btn-close-export" class="px-4 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-lg text-xs font-semibold transition-colors">閉じる</button>
+          <button id="btn-copy-json" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold transition-colors">クリップボードにコピー</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ------------------------------------------------------------------------
+    // 初期アプリデータ（デフォルト値）
+    // ------------------------------------------------------------------------
+    const defaultApps = [
+      {
+        id: "space-defense",
+        title: "スペースディフェンス 3D",
+        description: "Three.jsで開発した、迫りくる隕石を破壊する爽快3Dシューティングゲーム。直感的なタッチとスワイプ操作に対応。",
+        category: "game",
+        tags: ["Game", "Three.js", "3D"],
+        icon: "fa-solid fa-shuttle-space",
+        path: "space_defense.html",
+        gradient: "from-purple-600 to-indigo-600",
+        releaseDate: "2026-05"
+      },
+      {
+        id: "productivity-board",
+        title: "スマート・タスクボード",
+        description: "カンバン方式のドラッグ＆ドロップ対応タスク管理ツール。Firestoreを活用したリアルタイム共有とローカル保存機能を搭載。",
+        category: "utility",
+        tags: ["Utility", "TailwindCSS", "Firebase"],
+        icon: "fa-solid fa-chart-kanban",
+        path: "task_board.html",
+        gradient: "from-blue-600 to-cyan-500",
+        releaseDate: "2026-04"
+      },
+      {
+        id: "pixel-editor",
+        title: "ピクセルアート・キャンバス",
+        description: "レトロなドット絵をブラウザ上で簡単に作成・編集・エクスポートできるツール。カスタムパレット作成やGIFアニメ出力にも対応。",
+        category: "creative",
+        tags: ["Creative", "Canvas API", "HTML5"],
+        icon: "fa-solid fa-palette",
+        path: "pixel_editor.html",
+        gradient: "from-rose-500 to-orange-500",
+        releaseDate: "2026-03"
+      },
+      {
+        id: "sound-synthesizer",
+        title: "Webオーディオ・シンセサイザー",
+        description: "Web Audio APIを使用した直感的なポリフォニック・シンセサイザー。キーボード演奏や波形エディタ、エフェクト調整が可能。",
+        category: "creative",
+        tags: ["Creative", "Web Audio API", "JS"],
+        icon: "fa-solid fa-wave-square",
+        path: "synth.html",
+        gradient: "from-emerald-500 to-teal-600",
+        releaseDate: "2026-02"
+      },
+      {
+        id: "ai-chatbot",
+        title: "Geminiパーソナルチャット",
+        description: "Gemini 2.5 APIを実装した、賢くフレンドリーなパーソナルアシスタントチャット。履歴のローカル保存や音声合成読み上げに対応。",
+        category: "ai",
+        tags: ["AI", "Gemini API", "TailwindCSS"],
+        icon: "fa-regular fa-comments",
+        path: "ai_chat.html",
+        gradient: "from-amber-500 to-red-500",
+        releaseDate: "2026-01"
+      },
+      {
+        id: "math-simulator",
+        title: "物理挙動ビジュアライザー",
+        description: "重力、摩擦、衝突などの物理演算をブラウザ上にシミュレート。様々なパラメータをリアルタイムに変更して挙動を観察できます。",
+        category: "utility",
+        tags: ["Utility", "Physics", "Canvas"],
+        icon: "fa-solid fa-flask",
+        path: "physics_sim.html",
+        gradient: "from-indigo-500 to-pink-500",
+        releaseDate: "2025-12"
+      }
+    ];
+
+    // LocalStorageからデータを取得、なければデフォルトを適用
+    let myApps = [];
+    try {
+      const stored = localStorage.getItem('appsuite_apps');
+      if (stored) {
+        myApps = JSON.parse(stored);
+      } else {
+        myApps = [...defaultApps];
+        localStorage.setItem('appsuite_apps', JSON.stringify(myApps));
+      }
+    } catch (e) {
+      myApps = [...defaultApps];
+    }
+
+    // カテゴリマップ
+    const categoryLabels = {
+      all: "すべて",
+      game: "ゲーム",
+      utility: "便利ツール",
+      creative: "クリエイティブ",
+      ai: "AIアプリ"
+    };
+
+    // ------------------------------------------------------------------------
+    // UI管理・ダークモードロジック
+    // ------------------------------------------------------------------------
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+    } else {
+      document.documentElement.classList.remove('dark');
+      themeToggleDarkIcon.classList.remove('hidden');
+    }
+
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    themeToggleBtn.addEventListener('click', function() {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+
+      if (localStorage.getItem('color-theme')) {
+        if (localStorage.getItem('color-theme') === 'light') {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('color-theme', 'dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('color-theme', 'light');
+        }
+      } else {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('color-theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('color-theme', 'dark');
+        }
+      }
+    });
+
+    // ------------------------------------------------------------------------
+    // アプリポータル機能の実装
+    // ------------------------------------------------------------------------
+    let currentFilter = 'all';
+    let searchQuery = '';
+    let isAdminOpen = false;
+
+    const appsGrid = document.getElementById('apps-grid');
+    const noResults = document.getElementById('no-results');
+    const searchInput = document.getElementById('search-input');
+    const filterButtonsContainer = document.getElementById('filter-buttons-container');
+    const appCountBadge = document.getElementById('app-count-badge');
+
+    // 管理メニュー要素
+    const adminToggle = document.getElementById('admin-toggle');
+    const adminPanel = document.getElementById('admin-panel');
+    const appForm = document.getElementById('app-form');
+    const btnSubmitApp = document.getElementById('btn-submit-app');
+    const btnCancelEdit = document.getElementById('btn-cancel-edit');
+    const btnResetData = document.getElementById('btn-reset-data');
+    const btnExportJson = document.getElementById('btn-export-json');
+    const formEditId = document.getElementById('form-edit-id');
+
+    // フォーム入力フィールド
+    const formTitle = document.getElementById('form-title');
+    const formPath = document.getElementById('form-path');
+    const formCategory = document.getElementById('form-category');
+    const formRelease = document.getElementById('form-release');
+    const formDescription = document.getElementById('form-description');
+    const formIcon = document.getElementById('form-icon');
+    const formGradient = document.getElementById('form-gradient');
+    const formTags = document.getElementById('form-tags');
+
+    // モーダル要素
+    const appModal = document.getElementById('app-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDescription = document.getElementById('modal-description');
+    const modalBanner = document.getElementById('modal-banner');
+    const modalBannerIcon = document.getElementById('modal-banner-icon');
+    const modalTags = document.getElementById('modal-tags');
+    const modalLaunchLink = document.getElementById('modal-launch-link');
+    const modalClose = document.getElementById('modal-close');
+    const modalCloseBtn = document.getElementById('modal-close-btn');
+
+    // エクスポートモーダル要素
+    const exportModal = document.getElementById('export-modal');
+    const exportTextarea = document.getElementById('export-textarea');
+    const btnCloseExport = document.getElementById('btn-close-export');
+    const btnCopyJson = document.getElementById('btn-copy-json');
+    const copySuccessMessage = document.getElementById('copy-success-message');
+
+    // 管理モードの開閉トグル
+    adminToggle.addEventListener('click', () => {
+      isAdminOpen = !isAdminOpen;
+      if (isAdminOpen) {
+        adminPanel.classList.remove('hidden');
+        adminToggle.classList.add('bg-blue-600', 'text-white', 'dark:bg-blue-600');
+        adminToggle.classList.remove('bg-slate-100', 'text-slate-700', 'dark:bg-slate-800');
+      } else {
+        adminPanel.classList.add('hidden');
+        adminToggle.classList.remove('bg-blue-600', 'text-white', 'dark:bg-blue-600');
+        adminToggle.classList.add('bg-slate-100', 'text-slate-700', 'dark:bg-slate-800');
+        resetForm();
+      }
+      renderApps(); // 管理用「編集/削除」ボタンを表示するため再レンダリング
+    });
+
+    // カテゴリフィルタボタンの生成
+    function renderFilterButtons() {
+      const currentCategories = ['all', ...new Set(myApps.map(app => app.category))];
+      filterButtonsContainer.innerHTML = '';
+      
+      currentCategories.forEach(cat => {
+        const isActive = currentFilter === cat;
+        const btn = document.createElement('button');
+        btn.className = `px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-300 ${
+          isActive 
+            ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/10' 
+            : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
+        }`;
+        btn.textContent = categoryLabels[cat] || cat;
+        btn.addEventListener('click', () => {
+          currentFilter = cat;
+          renderFilterButtons();
+          renderApps();
+        });
+        filterButtonsContainer.appendChild(btn);
+      });
+    }
+
+    // アプリカードのレンダリング
+    function renderApps() {
+      appsGrid.innerHTML = '';
+      
+      const filteredApps = myApps.filter(app => {
+        const matchesCategory = currentFilter === 'all' || app.category === currentFilter;
+        const combinedText = `${app.title} ${app.description} ${(app.tags || []).join(' ')}`.toLowerCase();
+        const matchesSearch = combinedText.includes(searchQuery.toLowerCase());
+        return matchesCategory && matchesSearch;
+      });
+
+      appCountBadge.innerHTML = `<i class="fa-solid fa-folder-open text-emerald-500 mr-1.5"></i>全 <strong>${myApps.length}</strong> 個のアプリ (表示中: ${filteredApps.length})`;
+
+      if (filteredApps.length === 0) {
+        appsGrid.classList.add('hidden');
+        noResults.classList.remove('hidden');
+        return;
+      }
+
+      appsGrid.classList.remove('hidden');
+      noResults.classList.add('hidden');
+
+      filteredApps.forEach(app => {
+        const card = document.createElement('div');
+        card.className = "group bg-white dark:bg-slate-800 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 overflow-hidden shadow-sm hover:shadow-xl hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full relative";
+        
+        const appTags = app.tags || [];
+        const tagsHtml = appTags.slice(0, 3).map(tag => 
+          `<span class="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">${tag}</span>`
+        ).join('');
+
+        // 管理モード時の編集・削除用フローティングボタン
+        const adminToolsHtml = isAdminOpen ? `
+          <div class="absolute top-3 left-3 flex space-x-1.5 z-10">
+            <button onclick="editApp('${app.id}')" class="p-2 bg-white/95 dark:bg-slate-800/95 hover:bg-blue-50 dark:hover:bg-blue-950 text-blue-600 rounded-lg shadow-md transition-all text-xs" title="編集する">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            <button onclick="deleteApp('${app.id}')" class="p-2 bg-white/95 dark:bg-slate-800/95 hover:bg-red-50 dark:hover:bg-red-950 text-red-500 rounded-lg shadow-md transition-all text-xs" title="削除する">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        ` : '';
+
+        const currentIcon = app.icon || "fa-solid fa-cubes";
+        const releaseStr = app.releaseDate || "2026-06";
+
+        card.innerHTML = `
+          ${adminToolsHtml}
+          <!-- アプリバナー -->
+          <div class="h-32 bg-gradient-to-tr ${app.gradient} relative overflow-hidden flex items-center justify-center transition-all duration-300 group-hover:opacity-95">
+            <div class="absolute -right-6 -bottom-6 w-24 h-24 rounded-full bg-white/10 blur-xl"></div>
+            <div class="absolute -left-6 -top-6 w-16 h-16 rounded-full bg-white/10 blur-lg"></div>
+            
+            <div class="w-14 h-14 rounded-2xl bg-white/15 backdrop-blur-md flex items-center justify-center text-white shadow-inner">
+              <i class="${currentIcon} text-2xl"></i>
+            </div>
+            
+            <span class="absolute top-3 right-3 px-2 py-0.5 rounded bg-black/20 text-white text-[10px] font-medium backdrop-blur-sm">
+              ${releaseStr}
+            </span>
+          </div>
+
+          <!-- アプリ情報 -->
+          <div class="p-5 flex-grow flex flex-col">
+            <div class="flex items-center space-x-1.5 mb-2">
+              ${tagsHtml}
+            </div>
+            <h4 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors mb-1.5 line-clamp-1">
+              ${app.title}
+            </h4>
+            <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed mb-4 flex-grow">
+              ${app.description}
+            </p>
+            
+            <!-- アクションボタン -->
+            <div class="flex items-center space-x-2 pt-3 border-t border-slate-100 dark:border-slate-700/60 mt-auto">
+              <button class="details-btn flex-1 py-2 bg-slate-50 hover:bg-slate-100 dark:bg-slate-700/50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-xl text-xs font-semibold transition-all flex items-center justify-center space-x-1" data-id="${app.id}">
+                <i class="fa-solid fa-circle-info"></i>
+                <span>詳細</span>
+              </button>
+              <a href="${app.path}" class="flex-1 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl text-xs font-semibold text-center transition-all shadow-md shadow-blue-500/10 flex items-center justify-center space-x-1">
+                <span>起動する</span>
+                <i class="fa-solid fa-play text-[10px]"></i>
+              </a>
+            </div>
+          </div>
+        `;
+        
+        // 詳細ボタンのイベント登録
+        card.querySelector('.details-btn').addEventListener('click', (e) => {
+          const appID = e.currentTarget.getAttribute('data-id');
+          openModal(appID);
+        });
+
+        appsGrid.appendChild(card);
+      });
+    }
+
+    // ------------------------------------------------------------------------
+    // 新しいアプリの追加 ＆ 既存アプリの更新ロジック
+    // ------------------------------------------------------------------------
+    appForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const editId = formEditId.value;
+      const rawTags = formTags.value;
+      const tagsArray = rawTags ? rawTags.split(',').map(t => t.trim()).filter(t => t !== '') : [];
+
+      const appData = {
+        id: editId || `app-${Date.now()}`,
+        title: formTitle.value,
+        description: formDescription.value,
+        category: formCategory.value,
+        tags: tagsArray.length > 0 ? tagsArray : [formCategory.value.toUpperCase()],
+        icon: formIcon.value || "fa-solid fa-cubes",
+        path: formPath.value,
+        gradient: formGradient.value,
+        releaseDate: formRelease.value || new Date().toISOString().substring(0, 7)
+      };
+
+      if (editId) {
+        // 編集モード
+        const index = myApps.findIndex(app => app.id === editId);
+        if (index !== -1) {
+          myApps[index] = appData;
+        }
+      } else {
+        // 新規追加
+        myApps.unshift(appData);
+      }
+
+      // LocalStorageへ保存して画面再描写
+      localStorage.setItem('appsuite_apps', JSON.stringify(myApps));
+      resetForm();
+      renderFilterButtons();
+      renderApps();
+    });
+
+    // フォームのリセット
+    function resetForm() {
+      formEditId.value = '';
+      formTitle.value = '';
+      formPath.value = '';
+      formCategory.value = 'utility';
+      formRelease.value = '';
+      formDescription.value = '';
+      formIcon.value = '';
+      formGradient.value = 'from-blue-600 to-indigo-600';
+      formTags.value = '';
+      
+      btnSubmitApp.innerHTML = `<span>アプリを追加する</span>`;
+      btnCancelEdit.classList.add('hidden');
+    }
+
+    // キャンセルボタン
+    btnCancelEdit.addEventListener('click', resetForm);
+
+    // 編集モードの呼び出し
+    window.editApp = function(id) {
+      const app = myApps.find(a => a.id === id);
+      if (!app) return;
+
+      formEditId.value = app.id;
+      formTitle.value = app.title;
+      formPath.value = app.path;
+      formCategory.value = app.category;
+      formRelease.value = app.releaseDate || '';
+      formDescription.value = app.description;
+      formIcon.value = app.icon || '';
+      formGradient.value = app.gradient || 'from-blue-600 to-indigo-600';
+      formTags.value = (app.tags || []).join(', ');
+
+      btnSubmitApp.innerHTML = `<i class="fa-solid fa-check mr-1"></i><span>変更を保存</span>`;
+      btnCancelEdit.classList.remove('hidden');
+
+      // スムーズにフォームへスクロール
+      adminPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    // 削除処理
+    window.deleteApp = function(id) {
+      const app = myApps.find(a => a.id === id);
+      if (!app) return;
+
+      const confirmDelete = confirm(`「${app.title}」をポートフォリオから削除しますか？`);
+      if (confirmDelete) {
+        myApps = myApps.filter(a => a.id !== id);
+        localStorage.setItem('appsuite_apps', JSON.stringify(myApps));
+        
+        if (formEditId.value === id) {
+          resetForm();
+        }
+        renderFilterButtons();
+        renderApps();
+      }
+    };
+
+    // 初期化（リセット）
+    btnResetData.addEventListener('click', () => {
+      const confirmReset = confirm('登録したデータをすべて消去し、初期搭載のデモアプリ一覧に戻しますか？');
+      if (confirmReset) {
+        myApps = [...defaultApps];
+        localStorage.setItem('appsuite_apps', JSON.stringify(myApps));
+        resetForm();
+        renderFilterButtons();
+        renderApps();
+      }
+    });
+
+    // JSON出力モーダルの開閉
+    btnExportJson.addEventListener('click', () => {
+      exportTextarea.value = JSON.stringify(myApps, null, 2);
+      exportModal.classList.remove('hidden');
+      setTimeout(() => {
+        exportModal.classList.remove('opacity-0');
+      }, 50);
+    });
+
+    // コピーボタン
+    btnCopyJson.addEventListener('click', () => {
+      exportTextarea.select();
+      document.execCommand('copy');
+      
+      copySuccessMessage.classList.remove('opacity-0');
+      setTimeout(() => {
+        copySuccessMessage.classList.add('opacity-0');
+      }, 2000);
+    });
+
+    btnCloseExport.addEventListener('click', () => {
+      exportModal.classList.add('opacity-0');
+      setTimeout(() => {
+        exportModal.classList.add('hidden');
+      }, 300);
+    });
+
+    // 詳細モーダルの制御
+    function openModal(appId) {
+      const app = myApps.find(a => a.id === appId);
+      if (!app) return;
+
+      modalTitle.textContent = app.title;
+      modalDescription.textContent = app.description;
+      modalLaunchLink.href = app.path;
+      
+      modalBanner.className = `h-40 bg-gradient-to-r ${app.gradient} flex items-center justify-center text-white relative`;
+      modalBannerIcon.className = `${app.icon || "fa-solid fa-cubes"} text-7xl opacity-30`;
+
+      const appTags = app.tags || [];
+      modalTags.innerHTML = appTags.map(tag => 
+        `<span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-800/40">${tag}</span>`
+      ).join('');
+
+      appModal.classList.remove('hidden');
+      setTimeout(() => {
+        appModal.classList.remove('opacity-0');
+        appModal.querySelector('div').classList.remove('scale-95');
+        appModal.querySelector('div').classList.add('scale-100');
+      }, 50);
+    }
+
+    function closeModal() {
+      appModal.classList.add('opacity-0');
+      appModal.querySelector('div').classList.remove('scale-100');
+      appModal.querySelector('div').classList.add('scale-95');
+      setTimeout(() => {
+        appModal.classList.add('hidden');
+      }, 300);
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    modalCloseBtn.addEventListener('click', closeModal);
+    appModal.addEventListener('click', (e) => {
+      if (e.target === appModal) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (!appModal.classList.contains('hidden')) closeModal();
+        if (!exportModal.classList.contains('hidden')) {
+          exportModal.classList.add('opacity-0');
+          setTimeout(() => exportModal.classList.add('hidden'), 300);
+        }
+      }
+    });
+
+    // 検索入力の監視
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      renderApps();
+    });
+
+    // 初期起動時の処理
+    window.addEventListener('DOMContentLoaded', () => {
+      renderFilterButtons();
+      renderApps();
+    });
+  </script>
+</body>
+</html>
