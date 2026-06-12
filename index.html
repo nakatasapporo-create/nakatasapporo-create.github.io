@@ -43,10 +43,6 @@
       </div>
 
       <div class="flex items-center space-x-3">
-        <button id="admin-toggle" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors flex items-center space-x-1" title="管理モードを切り替え">
-          <i class="fa-solid fa-lock" id="admin-lock-icon"></i>
-          <span class="hidden sm:inline">管理メニュー</span>
-        </button>
         <button id="theme-toggle" class="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500">
           <i id="theme-toggle-dark-icon" class="hidden fa-solid fa-moon text-lg"></i>
           <i id="theme-toggle-light-icon" class="hidden fa-solid fa-sun text-lg"></i>
@@ -57,121 +53,10 @@
 
   <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
     
-    <div id="password-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden transition-all duration-300">
-      <div class="bg-white dark:bg-slate-800 w-full max-w-sm rounded-2xl shadow-xl p-6 border border-slate-100 dark:border-slate-700">
-        <div class="w-12 h-12 bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 rounded-xl flex items-center justify-center text-xl mb-4">
-          <i class="fa-solid fa-shield-halved"></i>
-        </div>
-        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-1">管理者認証 (ハッシュ保護)</h3>
-        <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">管理メニューにアクセスするにはパスワードを入力してください。<br><span class="font-medium text-blue-500 dark:text-blue-400">※初期設定値: admin123</span></p>
-        
-        <form id="password-form" class="space-y-3">
-          <div>
-            <input type="password" id="input-admin-password" placeholder="パスワードを入力" required class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white">
-            <span id="password-error-msg" class="text-[11px] text-red-500 font-medium mt-1 block hidden">パスワードが正しくありません</span>
-          </div>
-          <div class="flex space-x-2 pt-2">
-            <button type="button" id="btn-close-pwd-modal" class="flex-1 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 text-slate-700 dark:text-slate-200 rounded-xl text-xs font-semibold transition-colors">閉じる</button>
-            <button type="submit" class="flex-1 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold shadow-md shadow-blue-500/10 transition-colors">認証する</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <div id="admin-panel" class="hidden bg-slate-100 dark:bg-slate-800/60 rounded-2xl border-2 border-dashed border-slate-300 dark:border-slate-700 p-6 mb-8 transition-all duration-300">
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-200 dark:border-slate-700">
-        <div>
-          <h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center space-x-2">
-            <i class="fa-solid fa-screwdriver-wrench text-blue-600 dark:text-blue-400"></i>
-            <span>アプリ登録・編集システム</span>
-          </h3>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">ハッシュ化セキュリティが有効です。データは安全にブラウザへ保存されます。</p>
-        </div>
-        <div class="flex flex-wrap gap-2">
-          <button id="btn-change-pwd" class="px-3 py-1.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 rounded-lg text-xs font-semibold text-slate-700 dark:text-slate-200 transition-colors flex items-center space-x-1">
-            <i class="fa-solid fa-key"></i>
-            <span>パスワード変更</span>
-          </button>
-          <button id="btn-export-json" class="px-3 py-1.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 rounded-lg text-xs font-semibold text-slate-700 dark:text-slate-200 transition-colors flex items-center space-x-1">
-            <i class="fa-solid fa-file-export"></i>
-            <span>JSON出力 (コード貼付用)</span>
-          </button>
-          <button id="btn-reset-data" class="px-3 py-1.5 bg-red-50 hover:bg-red-100 dark:bg-red-950/30 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400 rounded-lg text-xs font-semibold transition-colors flex items-center space-x-1">
-            <i class="fa-solid fa-trash-arrow-up"></i>
-            <span>初期化</span>
-          </button>
-        </div>
-      </div>
-
-      <form id="app-form" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <input type="hidden" id="form-edit-id" value="">
-        <div class="space-y-3">
-          <div>
-            <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">アプリ名 <span class="text-red-500">*</span></label>
-            <input type="text" id="form-title" required placeholder="例: マインドマップ" class="w-full px-3 py-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white">
-          </div>
-          <div>
-            <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">ファイルパス (リンクURL) <span class="text-red-500">*</span></label>
-            <input type="text" id="form-path" required placeholder="例: mindmap.html" class="w-full px-3 py-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white">
-          </div>
-          <div class="grid grid-cols-2 gap-2">
-            <div>
-              <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">カテゴリ</label>
-              <select id="form-category" class="w-full px-3 py-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white">
-                <option value="utility">便利ツール</option>
-                <option value="game">ゲーム</option>
-                <option value="creative">クリエイティブ</option>
-                <option value="ai">AIアプリ</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">リリース月</label>
-              <input type="text" id="form-release" placeholder="例: 2026-06" class="w-full px-3 py-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white">
-            </div>
-          </div>
-        </div>
-
-        <div class="space-y-3">
-          <div>
-            <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">説明文 <span class="text-red-500">*</span></label>
-            <textarea id="form-description" required rows="2" placeholder="アプリの特徴や使い方..." class="w-full px-3 py-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none text-slate-900 dark:text-white"></textarea>
-          </div>
-          <div class="grid grid-cols-2 gap-2">
-            <div>
-              <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">FontAwesomeアイコン</label>
-              <input type="text" id="form-icon" placeholder="例: fa-solid fa-brain" class="w-full px-3 py-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">バナー配色</label>
-              <select id="form-gradient" class="w-full px-3 py-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white">
-                <option value="from-blue-600 to-indigo-600">ブルー & パープル</option>
-                <option value="from-purple-600 to-indigo-600">パープル & ダークブルー</option>
-                <option value="from-emerald-500 to-teal-600">エメラルド & ティール</option>
-                <option value="from-rose-500 to-orange-500">ローズ & オレンジ</option>
-                <option value="from-amber-500 to-red-500">アンバー & レッド</option>
-                <option value="from-indigo-500 to-pink-500">インディゴ & ピンク</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div class="space-y-3 flex flex-col justify-between">
-          <div>
-            <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">タグ (カンマ区切り)</label>
-            <input type="text" id="form-tags" placeholder="例: Utility, Canvas" class="w-full px-3 py-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white">
-          </div>
-          <div class="flex space-x-2 pt-2">
-            <button type="button" id="btn-cancel-edit" class="flex-1 py-2 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200/50 rounded-xl text-xs font-semibold transition-all">キャンセル</button>
-            <button type="submit" id="btn-submit-app" class="flex-[2] py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold shadow-md shadow-blue-500/15 transition-all">アプリを追加する</button>
-          </div>
-        </div>
-      </form>
-    </div>
-
     <div class="text-center md:text-left md:flex md:items-center md:justify-between border-b border-slate-200 dark:border-slate-800 pb-8 mb-8">
       <div class="max-w-2xl">
         <h2 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">マイ・Webアプリケーション集</h2>
-        <p class="mt-3 text-lg text-slate-500 dark:text-slate-400">これまでに生成AIを利用しながら開発した自作のWEBツールを集約しました。ブラウザ上で直接動作します。</p>
+        <p class="mt-3 text-lg text-slate-500 dark:text-slate-400">これまでに開発した自作のWEBツールを集約しました。ブラウザ上で直接動作します。</p>
       </div>
       <div class="mt-6 md:mt-0 flex flex-wrap justify-center gap-4 text-sm font-medium">
         <div class="px-4 py-2 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex items-center space-x-2">
@@ -204,7 +89,7 @@
   </main>
 
   <footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40 py-6 text-center text-sm text-slate-500">
-    <p>© 2026 AppSuite. Created with Passion.</p>
+    <p>© 2026 AppSuite. All Rights Reserved.</p>
   </footer>
 
   <div id="app-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
@@ -233,56 +118,50 @@
     </div>
   </div>
 
-  <div id="export-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
-    <div class="bg-white dark:bg-slate-800 w-full max-w-xl rounded-2xl shadow-xl p-6">
-      <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 flex items-center space-x-2"><i class="fa-solid fa-code text-indigo-500"></i><span>JSONデータ出力</span></h3>
-      <p class="text-xs text-slate-500 mb-4">コード内の <code>const defaultApps = [...]</code> に上書きすることで、データを完全に固定化できます。</p>
-      <textarea id="export-textarea" readonly rows="8" class="w-full p-3 font-mono text-xs bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-800 dark:text-slate-200 focus:outline-none"></textarea>
-      <div class="mt-4 flex justify-between items-center">
-        <span id="copy-success-message" class="text-xs text-emerald-500 font-semibold opacity-0 transition-opacity duration-300">コピーしました！</span>
-        <div class="flex space-x-2">
-          <button id="btn-close-export" class="px-4 py-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-lg text-xs font-semibold">閉じる</button>
-          <button id="btn-copy-json" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-xs font-semibold">クリップボードにコピー</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <script>
-    // デフォルトのアプリデータ
-    const defaultApps = [
-      { id: "space-defense", title: "スペースディフェンス 3D", description: "Three.jsで開発した、迫りくる隕石を破壊する爽快3Dシューティングゲーム。", category: "game", tags: ["Game", "Three.js"], icon: "fa-solid fa-shuttle-space", path: "space_defense.html", gradient: "from-purple-600 to-indigo-600", releaseDate: "2026-05" },
-      { id: "productivity-board", title: "スマート・タスクボード", description: "カンバン方式のドラッグ＆ドロップ対応タスク管理ツール。", category: "utility", tags: ["Utility", "Firebase"], icon: "fa-solid fa-chart-kanban", path: "task_board.html", gradient: "from-blue-600 to-cyan-500", releaseDate: "2026-04" },
-      { id: "pixel-editor", title: "ピクセルアート・キャンバス", description: "レトロなドット絵をブラウザ上で簡単に作成・編集・エクスポートできるツール。", category: "creative", tags: ["Creative", "Canvas"], icon: "fa-solid fa-palette", path: "pixel_editor.html", gradient: "from-rose-500 to-orange-500", releaseDate: "2026-03" }
+    // ========================================================================
+    // 【管理者用】掲載するアプリケーションの一覧データ
+    // アプリを追加・変更したい場合は、以下の配列の中身を直接編集してください。
+    // ========================================================================
+    const myApps = [
+     
+      { 
+        id: "hiraganakatakana50on", 
+        title: "ひらながカタカナボード", 
+        description: "ひらがなとカタカナの文字を並べて音声で読み上げるアプリです。", 
+        category: "utility", 
+        tags: ["Utility"], 
+        icon: "fa-solid fa-chart-kanban", 
+        path: "https://nakatasapporo-create.github.io/50on/", 
+        gradient: "from-blue-600 to-cyan-500", 
+        releaseDate: "2026-06" 
+      },
+       { 
+        id: "junban", 
+        title: "順番決めルーレット", 
+        description: "その場で写真を撮って、順番を決められるルーレットです。", 
+        category: "utility", 
+        tags: ["Utility"], 
+        icon: "fa-solid fa-chart-kanban", 
+        path: "https://nakatasapporo-create.github.io/junban/", 
+        gradient: "from-blue-600 to-cyan-500", 
+        releaseDate: "2026-06" 
+      },
+       { 
+        id: "gakusyuhi", 
+        title: "学習費割り勘アプリ", 
+        description: "学習費を児童生徒で割ると出てくる端数をどう配分するかがすぐに出てきます。", 
+        category: "utility", 
+        tags: ["Utility"], 
+        icon: "fa-solid fa-chart-kanban", 
+        path: "https://nakatasapporo-create.github.io/gakusyuhikeisan/", 
+        gradient: "from-blue-600 to-cyan-500", 
+        releaseDate: "2026-06" 
+      },
     ];
 
-    let myApps = [];
-    try {
-      const stored = localStorage.getItem('appsuite_apps');
-      myApps = stored ? JSON.parse(stored) : [...defaultApps];
-      if(!stored) localStorage.setItem('appsuite_apps', JSON.stringify(myApps));
-    } catch (e) { myApps = [...defaultApps]; }
-
+    // カテゴリの日本語マップ
     const categoryLabels = { all: "すべて", game: "ゲーム", utility: "便利ツール", creative: "クリエイティブ", ai: "AIアプリ" };
-
-    // ------------------------------------------------------------------------
-    // クライアントサイド SHA-256 ハッシュ化ロジック (Web Crypto API)
-    // ------------------------------------------------------------------------
-    // 「admin123」のSHA-256ハッシュの初期値
-    const DEFAULT_HASH = "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9"; 
-    let isAuthorized = false; 
-
-    // 文字列をSHA-256ハッシュに変換する非同期関数
-    async function hashPassword(password) {
-      const msgBuffer = new TextEncoder().encode(password);
-      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    }
-
-    function getSavedHash() {
-      return localStorage.getItem('appsuite_admin_hash') || DEFAULT_HASH;
-    }
 
     // ダークモード制御
     const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
@@ -298,113 +177,26 @@
       } else { document.documentElement.classList.add('dark'); localStorage.setItem('color-theme', 'dark'); }
     });
 
-    // ------------------------------------------------------------------------
-    // UI制御・DOM要素
-    // ------------------------------------------------------------------------
-    let currentFilter = 'all'; let searchQuery = ''; let isAdminOpen = false;
+    // 状態管理
+    let currentFilter = 'all'; 
+    let searchQuery = '';
+
+    // DOM要素
     const appsGrid = document.getElementById('apps-grid');
     const noResults = document.getElementById('no-results');
     const searchInput = document.getElementById('search-input');
     const filterButtonsContainer = document.getElementById('filter-buttons-container');
     const appCountBadge = document.getElementById('app-count-badge');
 
-    const adminToggle = document.getElementById('admin-toggle');
-    const adminLockIcon = document.getElementById('admin-lock-icon');
-    const adminPanel = document.getElementById('admin-panel');
-    const appForm = document.getElementById('app-form');
-    const btnSubmitApp = document.getElementById('btn-submit-app');
-    const btnCancelEdit = document.getElementById('btn-cancel-edit');
-    const btnResetData = document.getElementById('btn-reset-data');
-    const btnExportJson = document.getElementById('btn-export-json');
-    const btnChangePwd = document.getElementById('btn-change-pwd');
-    const formEditId = document.getElementById('form-edit-id');
-
-    const passwordModal = document.getElementById('password-modal');
-    const passwordForm = document.getElementById('password-form');
-    const inputAdminPassword = document.getElementById('input-admin-password');
-    const passwordErrorMsg = document.getElementById('password-error-msg');
-    const btnClosePwdModal = document.getElementById('btn-close-pwd-modal');
-
-    // フォーム入力
-    const formTitle = document.getElementById('form-title'); const formPath = document.getElementById('form-path');
-    const formCategory = document.getElementById('form-category'); const formRelease = document.getElementById('form-release');
-    const formDescription = document.getElementById('form-description'); const formIcon = document.getElementById('form-icon');
-    const formGradient = document.getElementById('form-gradient'); const formTags = document.getElementById('form-tags');
-
-    // モーダル
-    const appModal = document.getElementById('app-modal'); const modalTitle = document.getElementById('modal-title');
-    const modalDescription = document.getElementById('modal-description'); const modalBanner = document.getElementById('modal-banner');
-    const modalBannerIcon = document.getElementById('modal-banner-icon'); const modalTags = document.getElementById('modal-tags');
+    const appModal = document.getElementById('app-modal'); 
+    const modalTitle = document.getElementById('modal-title');
+    const modalDescription = document.getElementById('modal-description'); 
+    const modalBanner = document.getElementById('modal-banner');
+    const modalBannerIcon = document.getElementById('modal-banner-icon'); 
+    const modalTags = document.getElementById('modal-tags');
     const modalLaunchLink = document.getElementById('modal-launch-link');
 
-    const exportModal = document.getElementById('export-modal'); const exportTextarea = document.getElementById('export-textarea');
-    const btnCloseExport = document.getElementById('btn-close-export'); const btnCopyJson = document.getElementById('btn-copy-json');
-    const copySuccessMessage = document.getElementById('copy-success-message');
-
-    // 管理メニュー開閉ボタンの挙動
-    adminToggle.addEventListener('click', () => {
-      if (!isAuthorized) {
-        passwordErrorMsg.classList.add('hidden');
-        inputAdminPassword.value = '';
-        passwordModal.classList.remove('hidden');
-        return;
-      }
-      toggleAdminPanel();
-    });
-
-    // パスワード照合処理 (非同期ハッシュ比較)
-    passwordForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const inputHash = await hashPassword(inputAdminPassword.value);
-      
-      if (inputHash === getSavedHash()) {
-        isAuthorized = true;
-        passwordModal.classList.add('hidden');
-        adminLockIcon.className = "fa-solid fa-unlock";
-        toggleAdminPanel();
-      } else {
-        passwordErrorMsg.classList.remove('hidden');
-        inputAdminPassword.select();
-      }
-    });
-
-    btnClosePwdModal.addEventListener('click', () => passwordModal.classList.add('hidden'));
-
-    function toggleAdminPanel() {
-      isAdminOpen = !isAdminOpen;
-      if (isAdminOpen) {
-        adminPanel.classList.remove('hidden');
-        adminToggle.classList.add('bg-blue-600', 'text-white');
-      } else {
-        adminPanel.classList.add('hidden');
-        adminToggle.classList.remove('bg-blue-600', 'text-white');
-        resetForm();
-      }
-      renderApps();
-    }
-
-    // パスワード変更処理 (非同期ハッシュ化して保存)
-    btnChangePwd.addEventListener('click', async () => {
-      const current = prompt('現在のパスワードを入力してください:');
-      if (!current) return;
-      
-      const currentHash = await hashPassword(current);
-      if (currentHash !== getSavedHash()) {
-        alert('パスワードが一致しません。');
-        return;
-      }
-      
-      const newPwd = prompt('新しいパスワードを入力してください:');
-      if (newPwd && newPwd.trim() !== '') {
-        const newHash = await hashPassword(newPwd.trim());
-        localStorage.setItem('appsuite_admin_hash', newHash);
-        alert('パスワードをハッシュ化して安全に保存しました。次回から有効になります。');
-      } else if (newPwd !== null) {
-        alert('無効な入力です。');
-      }
-    });
-
-    // カテゴリフィルタ生成
+    // カテゴリフィルターボタンの生成
     function renderFilterButtons() {
       const currentCategories = ['all', ...new Set(myApps.map(app => app.category))];
       filterButtonsContainer.innerHTML = '';
@@ -418,7 +210,7 @@
       });
     }
 
-    // アプリグリッド描画
+    // アプリカードの表示処理
     function renderApps() {
       appsGrid.innerHTML = '';
       const filteredApps = myApps.filter(app => {
@@ -436,18 +228,11 @@
 
       filteredApps.forEach(app => {
         const card = document.createElement('div');
-        card.className = "group bg-white dark:bg-slate-800 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full relative";
+        card.className = "group bg-white dark:bg-slate-800 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full";
         
         const tagsHtml = (app.tags || []).slice(0, 3).map(tag => `<span class="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">${tag}</span>`).join('');
-        const adminToolsHtml = (isAuthorized && isAdminOpen) ? `
-          <div class="absolute top-3 left-3 flex space-x-1.5 z-10">
-            <button onclick="editApp('${app.id}')" class="p-2 bg-white dark:bg-slate-800 hover:bg-blue-50 text-blue-600 rounded-lg shadow-md text-xs"><i class="fa-solid fa-pen-to-square"></i></button>
-            <button onclick="deleteApp('${app.id}')" class="p-2 bg-white dark:bg-slate-800 hover:bg-red-50 text-red-500 rounded-lg shadow-md text-xs"><i class="fa-solid fa-trash"></i></button>
-          </div>
-        ` : '';
 
         card.innerHTML = `
-          ${adminToolsHtml}
           <div class="h-32 bg-gradient-to-tr ${app.gradient || 'from-blue-600 to-indigo-600'} relative flex items-center justify-center">
             <div class="w-14 h-14 rounded-2xl bg-white/15 backdrop-blur-md flex items-center justify-center text-white"><i class="${app.icon || 'fa-solid fa-cubes'} text-2xl"></i></div>
             <span class="absolute top-3 right-3 px-2 py-0.5 rounded bg-black/20 text-white text-[10px]">${app.releaseDate || '2026'}</span>
@@ -467,87 +252,7 @@
       });
     }
 
-    // アプリ追加・編集コミット
-    appForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      if (!isAuthorized) return;
-      
-      const editId = formEditId.value;
-      const rawTags = formTags.value;
-      const tagsArray = rawTags ? rawTags.split(',').map(t => t.trim()).filter(t => t !== '') : [];
-
-      const appData = {
-        id: editId || `app-${Date.now()}`,
-        title: formTitle.value, description: formDescription.value, category: formCategory.value,
-        tags: tagsArray.length > 0 ? tagsArray : [formCategory.value.toUpperCase()],
-        icon: formIcon.value || "fa-solid fa-cubes", path: formPath.value, gradient: formGradient.value,
-        releaseDate: formRelease.value || new Date().toISOString().substring(0, 7)
-      };
-
-      if (editId) {
-        const index = myApps.findIndex(app => app.id === editId);
-        if (index !== -1) myApps[index] = appData;
-      } else {
-        myApps.unshift(appData);
-      }
-
-      localStorage.setItem('appsuite_apps', JSON.stringify(myApps));
-      resetForm(); renderFilterButtons(); renderApps();
-    });
-
-    function resetForm() {
-      formEditId.value = ''; formTitle.value = ''; formPath.value = ''; formCategory.value = 'utility';
-      formRelease.value = ''; formDescription.value = ''; formIcon.value = ''; formGradient.value = 'from-blue-600 to-indigo-600'; formTags.value = '';
-      btnSubmitApp.innerHTML = `<span>アプリを追加する</span>`; btnCancelEdit.classList.add('hidden');
-    }
-    btnCancelEdit.addEventListener('click', resetForm);
-
-    window.editApp = function(id) {
-      if(!isAuthorized) return;
-      const app = myApps.find(a => a.id === id);
-      if (!app) return;
-      formEditId.value = app.id; formTitle.value = app.title; formPath.value = app.path; formCategory.value = app.category;
-      formRelease.value = app.releaseDate || ''; formDescription.value = app.description; formIcon.value = app.icon || '';
-      formGradient.value = app.gradient || 'from-blue-600 to-indigo-600'; formTags.value = (app.tags || []).join(', ');
-      btnSubmitApp.innerHTML = `<span>変更を保存</span>`; btnCancelEdit.classList.remove('hidden');
-      adminPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    };
-
-    window.deleteApp = function(id) {
-      if(!isAuthorized) return;
-      const app = myApps.find(a => a.id !== id);
-      if (app && confirm(`「${app.title}」を削除しますか？`)) {
-        myApps = myApps.filter(a => a.id !== id);
-        localStorage.setItem('appsuite_apps', JSON.stringify(myApps));
-        if (formEditId.value === id) resetForm();
-        renderFilterButtons(); renderApps();
-      }
-    };
-
-    btnResetData.addEventListener('click', () => {
-      if(isAuthorized && confirm('全データを初期状態に戻しますか？')) {
-        myApps = [...defaultApps]; localStorage.setItem('appsuite_apps', JSON.stringify(myApps));
-        resetForm(); renderFilterButtons(); renderApps();
-      }
-    });
-
-    btnExportJson.addEventListener('click', () => {
-      if(!isAuthorized) return;
-      exportTextarea.value = JSON.stringify(myApps, null, 2);
-      exportModal.classList.remove('hidden');
-      setTimeout(() => exportModal.classList.remove('opacity-0'), 50);
-    });
-
-    btnCopyJson.addEventListener('click', () => {
-      exportTextarea.select(); document.execCommand('copy');
-      copySuccessMessage.classList.remove('opacity-0');
-      setTimeout(() => copySuccessMessage.classList.add('opacity-0'), 2000);
-    });
-    btnCloseExport.addEventListener('click', () => {
-      exportModal.classList.add('opacity-0'); setTimeout(() => exportModal.classList.add('hidden'), 300);
-    });
-
-    // 詳細モーダル表示
+    // 詳細モーダルの開閉
     function openModal(appId) {
       const app = myApps.find(a => a.id === appId); if (!app) return;
       modalTitle.textContent = app.title; modalDescription.textContent = app.description; modalLaunchLink.href = app.path;
@@ -565,7 +270,10 @@
     document.getElementById('modal-close').addEventListener('click', closeModal);
     document.getElementById('modal-close-btn').addEventListener('click', closeModal);
 
+    // 検索入力イベント
     searchInput.addEventListener('input', (e) => { searchQuery = e.target.value; renderApps(); });
+    
+    // 初期起動
     window.addEventListener('DOMContentLoaded', () => { renderFilterButtons(); renderApps(); });
   </script>
 </body>
