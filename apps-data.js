@@ -14,6 +14,19 @@ const APP_DATA = [
     "releaseDate": "2026-06"
   },
   {
+    "id": "romaji",
+    "title": "ローマ字学習ボード",
+    "description": "小学3年生向けのヘボン式ローマ字を学べるボードです。",
+    "category": "utility",
+    "tags": [
+      "Utility"
+    ],
+    "icon": "fa-solid fa-chart-kanban",
+    "path": "https://nakatasapporo-create.github.io/romaji/",
+    "gradient": "from-blue-600 to-cyan-500",
+    "releaseDate": "2026-09"
+  },
+  {
     "id": "bunkaigosei",
     "title": "１０までの数の分解・合成アプリ",
     "description": "10までの数を分解・合成する計算アプリです。イラストを操作して数を確認することもできます。",
