@@ -1,1 +1,59 @@
+name: Update app thumbnails
 
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "apps-data.js"
+      - "scripts/capture-thumbnails.js"
+      - "package.json"
+      - ".github/workflows/update-thumbnails.yml"
+  schedule:
+    - cron: "10 18 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-app-thumbnails
+  cancel-in-progress: true
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Capture screenshots
+        run: npm run screenshots
+
+      - name: Commit updated thumbnails
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add thumbnails/
+
+          if git diff --cached --quiet; then
+            echo "No thumbnail changes."
+            exit 0
+          fi
+
+          git commit -m "chore: update app thumbnails"
+          git push
