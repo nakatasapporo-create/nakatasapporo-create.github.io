@@ -1,0 +1,8 @@
+{
+  "name": "nakatasapporo-appsuite-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AppSuite portfolio thumbnail generator",
+  "scripts": { "screenshots": "node scripts/capture-thumbnails.js" },
+  "devDependencies": { "playwright": "1.55.0" }
+}

@@ -3,554 +3,155 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NakataSapporoが生成AIとともに開発したWebアプリケーション集。">
+  <meta name="theme-color" content="#2563eb">
   <title>NakataSapporo Presents My Web Apps Portfolio - アプリケーション一覧</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
   <script>
     tailwind.config = {
       darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Plus Jakarta Sans', 'Noto Sans JP', 'sans-serif'] },
-          colors: { brand: { 50: '#f0f7ff', 100: '#e0effe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' } }
-        }
-      }
-    }
+      theme: { extend: {
+        fontFamily: { sans: ['Plus Jakarta Sans', 'Noto Sans JP', 'sans-serif'] },
+        colors: { brand: { 50:'#f0f7ff',100:'#e0effe',500:'#3b82f6',600:'#2563eb',700:'#1d4ed8' } }
+      }}
+    };
   </script>
   <style>
-    body { font-family: 'Plus Jakarta Sans', 'Noto Sans JP', sans-serif; }
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    .dark ::-webkit-scrollbar-track { background: #1f2937; }
-    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-    .dark ::-webkit-scrollbar-thumb { background: #4b5563; }
+    body { font-family:'Plus Jakarta Sans','Noto Sans JP',sans-serif; }
+    ::-webkit-scrollbar { width:8px; }
+    ::-webkit-scrollbar-track { background:transparent; }
+    .dark ::-webkit-scrollbar-track { background:#1f2937; }
+    ::-webkit-scrollbar-thumb { background:#cbd5e1; border-radius:4px; }
+    .dark ::-webkit-scrollbar-thumb { background:#4b5563; }
+    .app-thumb { transition:transform .45s ease, filter .3s ease; }
+    .app-card:hover .app-thumb { transform:scale(1.035); }
+    .app-card:focus-within { outline:2px solid #3b82f6; outline-offset:3px; }
+    @media (prefers-reduced-motion:reduce) {
+      *,*::before,*::after { animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; }
+    }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 min-h-full transition-colors duration-300 flex flex-col">
-
-  <header class="sticky top-0 z-40 w-full border-b border-slate-200/80 bg-slate-50/80 backdrop-blur dark:border-slate-800/80 dark:bg-slate-900/80 transition-colors duration-300">
+  <header class="sticky top-0 z-40 w-full border-b border-slate-200/80 bg-slate-50/85 backdrop-blur dark:border-slate-800/80 dark:bg-slate-900/85">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
-          <i class="fa-solid fa-cubes text-xl"></i>
-        </div>
+      <a href="./" class="flex items-center space-x-3" aria-label="AppSuite トップ">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-blue-500/20"><i class="fa-solid fa-cubes text-xl"></i></div>
         <div>
           <h1 class="text-lg font-bold tracking-tight bg-gradient-to-r from-blue-600 to-indigo-500 dark:from-blue-400 dark:to-indigo-300 bg-clip-text text-transparent">AppSuite</h1>
           <p class="text-xs text-slate-500 dark:text-slate-400">Web App Collection</p>
         </div>
-      </div>
-
-      <div class="flex items-center space-x-3">
-        <button id="theme-toggle" class="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500">
-          <i id="theme-toggle-dark-icon" class="hidden fa-solid fa-moon text-lg"></i>
-          <i id="theme-toggle-light-icon" class="hidden fa-solid fa-sun text-lg"></i>
-        </button>
-      </div>
+      </a>
+      <button id="theme-toggle" class="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="表示テーマを切り替える">
+        <i id="theme-toggle-dark-icon" class="hidden fa-solid fa-moon text-lg"></i>
+        <i id="theme-toggle-light-icon" class="hidden fa-solid fa-sun text-lg"></i>
+      </button>
     </div>
   </header>
 
   <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    
-    <div class="text-center md:text-left md:flex md:items-center md:justify-between border-b border-slate-200 dark:border-slate-800 pb-8 mb-8">
-      <div class="max-w-2xl">
-        <h2 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">マイ・Webアプリケーション集<BR></BR>By NakataSapporo</h2>
-        <p class="mt-3 text-lg text-slate-500 dark:text-slate-400">これまでに生成AIで開発した自作のWEBツールを集約しました。iPadやパソコンのブラウザ上で直接動作しますが、ブラウザの種類や仕様変更によって動作しない可能性があります。必要に応じてソースをコピー（右クリックしてソースを表示）して、生成AIを使って改造、改良してください。そのたたき台になればと思います。</p>
+    <section class="text-center md:text-left md:flex md:items-center md:justify-between border-b border-slate-200 dark:border-slate-800 pb-8 mb-8">
+      <div class="max-w-3xl">
+        <h2 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">マイ・Webアプリケーション集<br><span class="text-xl sm:text-2xl font-semibold text-slate-500 dark:text-slate-400">By NakataSapporo</span></h2>
+        <p class="mt-3 text-base sm:text-lg text-slate-500 dark:text-slate-400 leading-relaxed">これまでに生成AIで開発した自作のWEBツールを集約しました。iPadやパソコンのブラウザ上で直接動作しますが、ブラウザの種類や仕様変更によって動作しない可能性があります。必要に応じてソースをコピー（右クリックしてソースを表示）して、生成AIを使って改造、改良してください。そのたたき台になればと思います。</p>
       </div>
-      <div class="mt-6 md:mt-0 flex flex-wrap justify-center gap-4 text-sm font-medium">
-        <div class="px-4 py-2 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex items-center space-x-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span id="app-count-badge" class="text-slate-600 dark:text-slate-300 font-medium">ロード中...</span>
+      <div class="mt-6 md:mt-0 flex flex-col items-center md:items-end gap-2">
+        <div class="px-4 py-2 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex items-center space-x-2"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span><span id="app-count-badge" class="text-slate-600 dark:text-slate-300 font-medium">ロード中...</span></div>
+        <p id="thumbnail-updated" class="text-[11px] text-slate-400 min-h-[1rem]"></p>
+      </div>
+    </section>
+
+    <section class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-5 mb-8 shadow-sm">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <div class="relative flex-grow max-w-xl">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400"><i class="fa-solid fa-magnifying-glass"></i></span>
+          <input type="search" id="search-input" placeholder="アプリ名、説明、技術タグで検索..." class="w-full pl-10 pr-10 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white">
+          <button id="clear-search" class="hidden absolute inset-y-0 right-0 px-3 text-slate-400 hover:text-slate-700 dark:hover:text-white" aria-label="検索文字を消去"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <div id="filter-buttons-container" class="flex flex-wrap items-center gap-2"></div>
+          <select id="sort-select" class="ml-0 sm:ml-2 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs font-semibold text-slate-600 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="並び順">
+            <option value="default">登録順</option><option value="newest">新しい順</option><option value="title">名前順</option>
+          </select>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-5 mb-8 shadow-sm">
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div class="relative flex-grow max-w-lg">
-          <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </span>
-          <input type="text" id="search-input" placeholder="アプリ名、説明、技術タグで検索..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-white">
-        </div>
-        <div class="flex flex-wrap items-center gap-2" id="filter-buttons-container"></div>
+    <section>
+      <div id="apps-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      <div id="no-results" class="hidden text-center py-16">
+        <div class="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4"><i class="fa-solid fa-cube text-slate-400 text-2xl"></i></div>
+        <h3 class="text-lg font-medium text-slate-900 dark:text-white">見つかりませんでした</h3><p class="mt-1 text-sm text-slate-500">検索条件を変えてお試しください。</p>
       </div>
-    </div>
-
-    <div id="apps-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-
-    <div id="no-results" class="hidden text-center py-16">
-      <div class="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4">
-        <i class="fa-solid fa-cube text-slate-400 text-2xl"></i>
-      </div>
-      <h3 class="text-lg font-medium text-slate-900 dark:text-white">見つかりませんでした</h3>
-    </div>
+    </section>
   </main>
 
-  <footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40 py-6 text-center text-sm text-slate-500">
-    <p>© 2026 AppSuite. All Rights Reserved.</p>
-  </footer>
+  <footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40 py-6 text-center text-sm text-slate-500"><p>© 2026 AppSuite. All Rights Reserved.</p></footer>
 
-  <div id="app-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
-    <div class="bg-white dark:bg-slate-800 w-full max-w-2xl rounded-2xl shadow-xl overflow-hidden transform scale-95 transition-transform duration-300">
-      <div class="relative">
-        <div id="modal-banner" class="h-40 bg-gradient-to-r flex items-center justify-center text-white">
-          <i id="modal-banner-icon" class="fa-solid text-6xl opacity-35"></i>
-        </div>
-        <button id="modal-close" class="absolute top-4 right-4 bg-slate-900/40 text-white rounded-full p-2 hover:bg-slate-900/60"><i class="fa-solid fa-xmark"></i></button>
+  <div id="app-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div id="modal-panel" class="bg-white dark:bg-slate-800 w-full max-w-3xl rounded-2xl shadow-xl overflow-hidden transform scale-95 transition-transform duration-300">
+      <div class="relative h-56 sm:h-72 overflow-hidden bg-slate-100 dark:bg-slate-900">
+        <div id="modal-fallback" class="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center text-white"><i id="modal-banner-icon" class="fa-solid fa-cubes text-7xl opacity-30"></i></div>
+        <img id="modal-thumbnail" alt="" class="app-thumb absolute inset-0 w-full h-full object-cover object-top opacity-0" hidden>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/10 pointer-events-none"></div>
+        <button id="modal-close" class="absolute top-4 right-4 w-10 h-10 bg-slate-900/55 text-white rounded-full hover:bg-slate-900/75" aria-label="閉じる"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="p-6">
         <div class="flex flex-wrap gap-2 mb-3" id="modal-tags"></div>
         <h3 id="modal-title" class="text-2xl font-bold text-slate-900 dark:text-white mb-2"></h3>
         <p id="modal-description" class="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed"></p>
-        <div class="border-t border-slate-100 dark:border-slate-700 pt-5 flex items-center justify-between">
-          <div>
-            <span class="text-xs text-slate-400 block">動作要件</span>
-            <span class="text-sm text-slate-600 dark:text-slate-400 font-medium">モダンブラウザ対応</span>
-          </div>
+        <div class="border-t border-slate-100 dark:border-slate-700 pt-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div><span class="text-xs text-slate-400 block">動作要件</span><span class="text-sm text-slate-600 dark:text-slate-400 font-medium">モダンブラウザ対応</span></div>
           <div class="flex space-x-3">
-            <button id="modal-close-btn" class="px-4 py-2 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium hover:bg-slate-50">閉じる</button>
-            <a id="modal-launch-link" href="#" class="px-5 py-2 bg-blue-600 text-white rounded-xl text-sm font-medium shadow-md flex items-center space-x-2"><span>アプリを起動する</span><i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></a>
+            <button id="modal-close-btn" class="px-4 py-2 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-700">閉じる</button>
+            <a id="modal-launch-link" href="#" target="_blank" rel="noopener noreferrer" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-medium shadow-md flex items-center space-x-2"><span>アプリを起動する</span><i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></a>
           </div>
         </div>
       </div>
     </div>
   </div>
 
+  <script src="./apps-data.js"></script>
   <script>
-    // ========================================================================
-    // 【管理者用】掲載するアプリケーションの一覧データ
-    // アプリを追加・変更したい場合は、以下の配列の中身を直接編集してください。
-    // ========================================================================
-    const myApps = [
-     
-      { 
-        id: "hiraganakatakana50on", 
-        title: "ひらながカタカナボード", 
-        description: "ひらがなとカタカナの文字を並べて音声で読み上げるアプリです。", 
-        category: "utility", 
-        tags: ["Utility"], 
-        icon: "fa-solid fa-chart-kanban", 
-        path: "https://nakatasapporo-create.github.io/50on/", 
-        gradient: "from-blue-600 to-cyan-500", 
-        releaseDate: "2026-06" 
-      },
-       { 
-        id: "bunkaigosei", 
-        title: "１０までの数の分解・合成アプリ", 
-        description: "10までの数を分解・合成する計算アプリです。イラストを操作して数を確認することもできます。", 
-        category: "utility", 
-        tags: ["Utility"], 
-        icon: "fa-solid fa-chart-kanban", 
-        path: "https://nakatasapporo-create.github.io/bunkaigosei/", 
-        gradient: "from-blue-600 to-cyan-500", 
-        releaseDate: "2026-06" 
-      },
-       { 
-        id: "tashizanhikizan", 
-        title: "足し算引き算アプリ", 
-        description: "20までの数と10までの数を、足し算と引き算する小学生低学年向けのアプリです。", 
-        category: "utility", 
-        tags: ["Utility"], 
-        icon: "fa-solid fa-chart-kanban", 
-        path: "https://nakatasapporo-create.github.io/tashizanhikizan/", 
-        gradient: "from-blue-600 to-cyan-500", 
-        releaseDate: "2026-06" 
-      },
-       { 
-        id: "junban", 
-        title: "順番決めルーレット", 
-        description: "その場で写真を撮って、順番を決められるルーレットです。", 
-        category: "utility", 
-        tags: ["Utility"], 
-        icon: "fa-solid fa-chart-kanban", 
-        path: "https://nakatasapporo-create.github.io/junban/", 
-        gradient: "from-blue-600 to-cyan-500", 
-        releaseDate: "2026-06" 
-      },
-       { 
-        id: "gakusyuhi", 
-        title: "学習費割り勘アプリ", 
-        description: "学習費を児童生徒で割ると出てくる端数をどう配分するかがすぐに出てきます。", 
-        category: "utility", 
-        tags: ["Utility"], 
-        icon: "fa-solid fa-chart-kanban", 
-        path: "https://nakatasapporo-create.github.io/gakusyuhikeisan/", 
-        gradient: "from-blue-600 to-cyan-500", 
-        releaseDate: "2026-06" 
-      },
-{ 
-        id: "gakusyuhi2", 
-        title: "学習費割り勘アプリ配分記憶版", 
-        description: "学習費を児童生徒で割ると出てくる端数をどう配分するかがすぐに出てきます。このアプリはさらにどの児童生徒に配分するかを記憶する仕組みです。", 
-        category: "utility", 
-        tags: ["Utility"], 
-        icon: "fa-solid fa-chart-kanban", 
-        path: "https://nakatasapporo-create.github.io/warikanjunban/", 
-        gradient: "from-blue-600 to-cyan-500", 
-        releaseDate: "2026-07" 
-      },
-      
-      { 
-        id: "dochikana", 
-        title: "二択選択アプリ", 
-        description: "絵カードや写真カードを二択で選ぶ問題を作成できるシンプルなアプリです。特徴は問題を音声で読み上げてくれます。作った問題はエクスポートで保存でき、他の端末でもインポートすることができます。", 
-        category: "utility", 
-        tags: ["Utility"], 
-        icon: "fa-solid fa-chart-kanban", 
-        path: "https://nakatasapporo-create.github.io/dochikana/", 
-        gradient: "from-blue-600 to-cyan-500", 
-        releaseDate: "2026-06" 
-      },
-       { 
-        id: "heiftojpeg", 
-        title: "HeifファイルをJpegファイルに変換", 
-        description: "iPadなどで撮影したHeifファイルをJpegファイルに変換するアプリです。", 
-        category: "utility", 
-        tags: ["Utility"], 
-        icon: "fa-solid fa-chart-kanban", 
-        path: "https://nakatasapporo-create.github.io/heiftojpeg/", 
-        gradient: "from-blue-600 to-cyan-500", 
-        releaseDate: "2026-06" 
-      },
-      { 
-        id: "pdfbunkatu", 
-        title: "PDFファイルを分割", 
-        description: "何ページもあるPDFファイルを１ページ毎に分割します。", 
-        category: "utility", 
-        tags: ["Utility"], 
-        icon: "fa-solid fa-chart-kanban", 
-        path: "https://nakatasapporo-create.github.io/pdfbunkatu/", 
-        gradient: "from-blue-600 to-cyan-500", 
-        releaseDate: "2026-06" 
-      },
-      { 
-        id: "pdftoimage", 
-        title: "PDFファイルを画像へ変換", 
-        description: "PDFファイルを画像ファイルに変換します。", 
-        category: "utility", 
-        tags: ["Utility"], 
-        icon: "fa-solid fa-chart-kanban", 
-        path: "https://nakatasapporo-create.github.io/pdftoimage/", 
-        gradient: "from-blue-600 to-cyan-500", 
-        releaseDate: "2026-08" 
-      },
-      { 
-        id: "audiospeedchanger", 
-        title: "オーディオスピードチェンジャー", 
-        description: "音楽ファイルを音程を変えずにスピードを変えるアプリです。", 
-        category: "utility", 
-        tags: ["Utility"], 
-        icon: "fa-solid fa-chart-kanban", 
-        path: "https://nakatasapporo-create.github.io/audiospeedchanger/", 
-        gradient: "from-blue-600 to-cyan-500", 
-        releaseDate: "2026-06" 
-      },
-      { 
-        id: "dougatomp3", 
-        title: "画面収録動画を音楽ファイルに変換アプリ", 
-        description: "iPadの画面収録動画をmp3へ変換します。", 
-        category: "utility", 
-        tags: ["Utility"], 
-        icon: "fa-solid fa-chart-kanban", 
-        path: "https://nakatasapporo-create.github.io/dougatomp3/", 
-        gradient: "from-blue-600 to-cyan-500", 
-        releaseDate: "2026-06" 
-      },
-       { 
-        id: "m4atomp3", 
-        title: "iPadのボイスメモのデータをmp3へ変換するアプリ", 
-        description: "iPadのm4aファイルをmp3へ変換します。", 
-        category: "utility", 
-        tags: ["Utility"], 
-        icon: "fa-solid fa-chart-kanban", 
-        path: "https://nakatasapporo-create.github.io/m4atomp3/", 
-        gradient: "from-blue-600 to-cyan-500", 
-        releaseDate: "2026-08" 
-      },
-       { 
-        id: "irogakuhu", 
-        title: "色楽譜制作アプリ", 
-        description: "簡単な楽譜を色楽譜にすることができるアプリです。", 
-        category: "utility", 
-        tags: ["Utility"], 
-        icon: "fa-solid fa-chart-kanban", 
-        path: "https://nakatasapporo-create.github.io/irogakuhu/", 
-        gradient: "from-blue-600 to-cyan-500", 
-        releaseDate: "2026-06" 
-      },
-       { 
-        id: "yotei", 
-        title: "簡単予定タイマーアプリ", 
-        description: "写真や画像と視覚的に分かりやすいタイマーを設置したタイマーアプリです。教師用画面のパスワードは1234です。", 
-        category: "utility", 
-        tags: ["Utility"], 
-        icon: "fa-solid fa-chart-kanban", 
-        path: "https://nakatasapporo-create.github.io/yotei/", 
-        gradient: "from-blue-600 to-cyan-500", 
-        releaseDate: "2026-06" 
-      },
-      { 
-        id: "speaktokei", 
-        title: "しゃべるデジタル時計", 
-        description: "タッチすると時間を話してくれるシンプルなしゃべるデジタル時計です。", 
-        category: "utility", 
-        tags: ["Utility"], 
-        icon: "fa-solid fa-chart-kanban", 
-        path: "https://nakatasapporo-create.github.io/speaktokei/", 
-        gradient: "from-blue-600 to-cyan-500", 
-        releaseDate: "2026-06" 
-      },
-       { 
-        id: "1nenkanji", 
-        title: "小学１年生の漢字", 
-        description: "小学１年生の漢字の一覧です。書き順を表示したり、読み方を音声で読み上げることができます。光村図書に準拠した順番になっているはずです。", 
-        category: "utility", 
-        tags: ["Utility"], 
-        icon: "fa-solid fa-chart-kanban", 
-        path: "https://nakatasapporo-create.github.io/1nenkanji/", 
-        gradient: "from-blue-600 to-cyan-500", 
-        releaseDate: "2026-06" 
-      },
-      { 
-        id: "2nenkanji", 
-        title: "小学２年生の漢字", 
-        description: "小学２年生の漢字の一覧です。書き順を表示したり、読み方を音声で読み上げることができます。光村図書に準拠した順番になっているはずです。", 
-        category: "utility", 
-        tags: ["Utility"], 
-        icon: "fa-solid fa-chart-kanban", 
-        path: "https://nakatasapporo-create.github.io/2nenkanji/", 
-        gradient: "from-blue-600 to-cyan-500", 
-        releaseDate: "2026-06" 
-      },
-       { 
-        id: "3nenkanji", 
-        title: "小学３年生の漢字", 
-        description: "小学３年生の漢字の一覧です。書き順を表示したり、読み方を音声で読み上げることができます。光村図書に準拠した順番になっているはずです。", 
-        category: "utility", 
-        tags: ["Utility"], 
-        icon: "fa-solid fa-chart-kanban", 
-        path: "https://nakatasapporo-create.github.io/3nenkanji/", 
-        gradient: "from-blue-600 to-cyan-500", 
-        releaseDate: "2026-06" 
-      },
-       { 
-        id: "kutouten", 
-        title: "句読点の学習", 
-        description: "小学生向けの句読点を学べるアプリです。", 
-        category: "utility", 
-        tags: ["Utility"], 
-        icon: "fa-solid fa-chart-kanban", 
-        path: "https://nakatasapporo-create.github.io/kutouten/", 
-        gradient: "from-blue-600 to-cyan-500", 
-        releaseDate: "2026-08" 
-      },
-       { 
-        id: "99mondai", 
-        title: "９９の問題", 
-        description: "９９の問題アプリです。段ごとに順番に問題を出すか、ランダムか選ぶことができます。問題と答えを音声で読み上げます。", 
-        category: "utility", 
-        tags: ["Utility"], 
-        icon: "fa-solid fa-chart-kanban", 
-        path: "https://nakatasapporo-create.github.io/99mondai/", 
-        gradient: "from-blue-600 to-cyan-500", 
-        releaseDate: "2026-06" 
-      },
-       { 
-        id: "99master", 
-        title: "９９マスター", 
-        description: "９９の問題アプリです。１の段から順番に出る問題と、アトランダムで出る問題を選ぶことができます。", 
-        category: "utility", 
-        tags: ["Utility"], 
-        icon: "fa-solid fa-chart-kanban", 
-        path: "https://nakatasapporo-create.github.io/99master/", 
-        gradient: "from-blue-600 to-cyan-500", 
-        releaseDate: "2026-08" 
-      },
-       { 
-        id: "schoolcalendar", 
-        title: "見通しカレンダー", 
-        description: "一週間の学校生活の見通しをもてるように作成したカレンダーです。好きなイラストを追加できます。先生モードのパスワードは「1234」です。", 
-        category: "utility", 
-        tags: ["Utility"], 
-        icon: "fa-solid fa-chart-kanban", 
-        path: "https://nakatasapporo-create.github.io/schoolcalendar/", 
-        gradient: "from-blue-600 to-cyan-500", 
-        releaseDate: "2026-06" 
-      },
-      { 
-        id: "onseitimer", 
-        title: "音タイマー", 
-        description: "音の違いで、どのくらい待てばいいのか分かることを目的としたタイマーです。", 
-        category: "utility", 
-        tags: ["Utility"], 
-        icon: "fa-solid fa-chart-kanban", 
-        path: "https://nakatasapporo-create.github.io/onseitimer/", 
-        gradient: "from-blue-600 to-cyan-500", 
-        releaseDate: "2026-06" 
-      },
-       { 
-        id: "qrcode", 
-        title: "QRコード作成", 
-        description: "簡単にQRコードが作成できます。", 
-        category: "utility", 
-        tags: ["Utility"], 
-        icon: "fa-solid fa-chart-kanban", 
-        path: "https://nakatasapporo-create.github.io/qrcode/", 
-        gradient: "from-blue-600 to-cyan-500", 
-        releaseDate: "2026-08" 
-      },
-        { 
-        id: "minna", 
-        title: "音声入力ホワイトボード", 
-        description: "タブレットの音声入力で発言しあう音声入力ボードです。付箋紙の移動もできます。一部ブラウザでは音声入力がうまくいかない場合があります。", 
-        category: "utility", 
-        tags: ["Utility"], 
-        icon: "fa-solid fa-chart-kanban", 
-        path: "https://nakatasapporo-create.github.io/minna/", 
-        gradient: "from-blue-600 to-cyan-500", 
-        releaseDate: "2026-07" 
-      },
-      { 
-        id: "ongaku", 
-        title: "音楽連続再生プレイヤー", 
-        description: "音楽データを連続再生したりシャッフル再生したりできるプレイヤーです。前回のファイルを記憶しています。", 
-        category: "utility", 
-        tags: ["Utility"], 
-        icon: "fa-solid fa-chart-kanban", 
-        path: "https://nakatasapporo-create.github.io/ongaku/", 
-        gradient: "from-blue-600 to-cyan-500", 
-        releaseDate: "2026-07" 
-      },
-      { 
-        id: "ongakukid", 
-        title: "子ども用音楽連続再生プレイヤー", 
-        description: "音楽データを連続再生したりシャッフル再生したりできるプレイヤーの低学年版です。前回のファイルを記憶しています。", 
-        category: "utility", 
-        tags: ["Utility"], 
-        icon: "fa-solid fa-chart-kanban", 
-        path: "https://nakatasapporo-create.github.io/ongakukid/", 
-        gradient: "from-blue-600 to-cyan-500", 
-        releaseDate: "2026-07" 
-      },
-    ];
+    const USE_REMOTE_THUMBNAIL_FALLBACK = true;
+    const REMOTE_THUMBNAIL_BASE = 'https://image.thum.io/get/width/900/crop/560/noanimate/';
+    const myApps = Array.isArray(window.APP_DATA) ? window.APP_DATA : [];
+    const categoryLabels = { all:'すべて', game:'ゲーム', utility:'便利ツール', creative:'クリエイティブ', ai:'AIアプリ' };
+    let currentFilter='all', searchQuery='', currentSort='default', thumbnailVersion='';
 
-    // カテゴリの日本語マップ
-    const categoryLabels = { all: "すべて", game: "ゲーム", utility: "便利ツール", creative: "クリエイティブ", ai: "AIアプリ" };
+    const appsGrid=document.getElementById('apps-grid'), noResults=document.getElementById('no-results'), searchInput=document.getElementById('search-input'), clearSearch=document.getElementById('clear-search'), sortSelect=document.getElementById('sort-select'), filterButtonsContainer=document.getElementById('filter-buttons-container'), appCountBadge=document.getElementById('app-count-badge'), thumbnailUpdated=document.getElementById('thumbnail-updated');
+    const appModal=document.getElementById('app-modal'), modalPanel=document.getElementById('modal-panel'), modalTitle=document.getElementById('modal-title'), modalDescription=document.getElementById('modal-description'), modalFallback=document.getElementById('modal-fallback'), modalBannerIcon=document.getElementById('modal-banner-icon'), modalTags=document.getElementById('modal-tags'), modalLaunchLink=document.getElementById('modal-launch-link');
+    let modalThumbnail=document.getElementById('modal-thumbnail');
 
-    // ダークモード制御
-    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
-    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
-    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark'); themeToggleLightIcon.classList.remove('hidden');
-    } else { document.documentElement.classList.remove('dark'); themeToggleDarkIcon.classList.remove('hidden'); }
+    const themeToggleDarkIcon=document.getElementById('theme-toggle-dark-icon'), themeToggleLightIcon=document.getElementById('theme-toggle-light-icon');
+    if(localStorage.getItem('color-theme')==='dark'||(!('color-theme' in localStorage)&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');themeToggleLightIcon.classList.remove('hidden');}else{document.documentElement.classList.remove('dark');themeToggleDarkIcon.classList.remove('hidden');}
+    document.getElementById('theme-toggle').addEventListener('click',()=>{themeToggleDarkIcon.classList.toggle('hidden');themeToggleLightIcon.classList.toggle('hidden');if(document.documentElement.classList.contains('dark')){document.documentElement.classList.remove('dark');localStorage.setItem('color-theme','light');}else{document.documentElement.classList.add('dark');localStorage.setItem('color-theme','dark');}});
 
-    document.getElementById('theme-toggle').addEventListener('click', function() {
-      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
-      if (document.documentElement.classList.contains('dark')) {
-        document.documentElement.classList.remove('dark'); localStorage.setItem('color-theme', 'light');
-      } else { document.documentElement.classList.add('dark'); localStorage.setItem('color-theme', 'dark'); }
-    });
+    function escapeHtml(value=''){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));}
+    function getLocalThumbnail(app){const cache=thumbnailVersion?`?v=${encodeURIComponent(thumbnailVersion)}`:'';return `./thumbnails/${encodeURIComponent(app.id)}.jpg${cache}`;}
+    function getRemoteThumbnail(app){return `${REMOTE_THUMBNAIL_BASE}${app.path}`;}
+    function wireThumbnail(img,fallbackLayer,app){let triedRemote=false;const reveal=()=>{img.hidden=false;img.classList.remove('opacity-0');fallbackLayer.classList.add('opacity-0');};img.addEventListener('load',reveal,{once:true});img.addEventListener('error',()=>{if(USE_REMOTE_THUMBNAIL_FALLBACK&&!triedRemote){triedRemote=true;img.src=getRemoteThumbnail(app);return;}img.hidden=true;fallbackLayer.classList.remove('opacity-0');});img.src=getLocalThumbnail(app);}
+    async function loadThumbnailManifest(){try{const r=await fetch('./thumbnails/manifest.json',{cache:'no-store'});if(!r.ok)return;const d=await r.json();thumbnailVersion=d.version||d.updatedAt||'';if(d.updatedAt){const date=new Date(d.updatedAt);if(!Number.isNaN(date.getTime()))thumbnailUpdated.textContent=`サムネイル更新: ${date.toLocaleString('ja-JP')}`;}}catch(_){}}
 
-    // 状態管理
-    let currentFilter = 'all'; 
-    let searchQuery = '';
+    function renderFilterButtons(){const categories=['all',...new Set(myApps.map(a=>a.category))];filterButtonsContainer.innerHTML='';categories.forEach(cat=>{const active=currentFilter===cat,btn=document.createElement('button');btn.type='button';btn.className=`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${active?'bg-blue-600 text-white shadow-sm':'bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600'}`;btn.textContent=categoryLabels[cat]||cat;btn.setAttribute('aria-pressed',active?'true':'false');btn.addEventListener('click',()=>{currentFilter=cat;renderFilterButtons();renderApps();});filterButtonsContainer.appendChild(btn);});}
+    function getFilteredApps(){const q=searchQuery.trim().toLowerCase();let filtered=myApps.filter(app=>{const category=currentFilter==='all'||app.category===currentFilter;const text=`${app.title} ${app.description} ${(app.tags||[]).join(' ')}`.toLowerCase();return category&&(!q||text.includes(q));});if(currentSort==='newest')filtered=[...filtered].sort((a,b)=>(b.releaseDate||'').localeCompare(a.releaseDate||''));if(currentSort==='title')filtered=[...filtered].sort((a,b)=>a.title.localeCompare(b.title,'ja'));return filtered;}
 
-    // DOM要素
-    const appsGrid = document.getElementById('apps-grid');
-    const noResults = document.getElementById('no-results');
-    const searchInput = document.getElementById('search-input');
-    const filterButtonsContainer = document.getElementById('filter-buttons-container');
-    const appCountBadge = document.getElementById('app-count-badge');
+    function renderApps(){appsGrid.innerHTML='';const filtered=getFilteredApps();appCountBadge.innerHTML=`<i class="fa-solid fa-folder-open text-emerald-500 mr-1.5"></i>全 <strong>${myApps.length}</strong> 個 (表示中: ${filtered.length})`;if(!filtered.length){appsGrid.classList.add('hidden');noResults.classList.remove('hidden');return;}appsGrid.classList.remove('hidden');noResults.classList.add('hidden');filtered.forEach(app=>{const card=document.createElement('article');card.className='app-card group bg-white dark:bg-slate-800 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full';const tags=(app.tags||[]).slice(0,3).map(tag=>`<span class="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">${escapeHtml(tag)}</span>`).join('');card.innerHTML=`
+      <a href="${escapeHtml(app.path)}" target="_blank" rel="noopener noreferrer" class="relative block aspect-[16/10] overflow-hidden bg-slate-100 dark:bg-slate-900" aria-label="${escapeHtml(app.title)} を開く">
+        <div class="thumb-fallback absolute inset-0 bg-gradient-to-tr ${app.gradient||'from-blue-600 to-indigo-600'} flex items-center justify-center transition-opacity duration-300"><div class="w-16 h-16 rounded-2xl bg-white/15 backdrop-blur-md flex items-center justify-center text-white shadow-lg"><i class="${app.icon||'fa-solid fa-cubes'} text-3xl"></i></div></div>
+        <img class="thumbnail-img app-thumb absolute inset-0 w-full h-full object-cover object-top opacity-0" alt="${escapeHtml(app.title)} の画面サムネイル" loading="lazy" decoding="async" hidden>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/5 opacity-60 group-hover:opacity-80 transition-opacity pointer-events-none"></div>
+        <span class="absolute top-3 right-3 px-2 py-1 rounded-lg bg-black/55 backdrop-blur text-white text-[10px] shadow-sm">${escapeHtml(app.releaseDate||'2026')}</span>
+        <span class="absolute bottom-3 right-3 px-3 py-1.5 rounded-full bg-white/90 dark:bg-slate-900/90 text-slate-700 dark:text-white text-xs font-bold shadow-md opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all">開く <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-[10px]"></i></span>
+      </a>
+      <div class="p-5 flex-grow flex flex-col"><div class="flex items-center space-x-1.5 mb-2">${tags}</div><h3 class="text-lg font-bold text-slate-900 dark:text-white mb-1.5 line-clamp-2">${escapeHtml(app.title)}</h3><p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-3 mb-4 flex-grow leading-relaxed">${escapeHtml(app.description)}</p><div class="flex items-center space-x-2 pt-3 border-t border-slate-100 dark:border-slate-700/60"><button class="details-btn flex-1 py-2.5 bg-slate-50 hover:bg-slate-100 dark:bg-slate-700/50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-xl text-xs font-semibold flex items-center justify-center space-x-1" data-id="${escapeHtml(app.id)}"><i class="fa-solid fa-circle-info"></i><span>詳細</span></button><a href="${escapeHtml(app.path)}" target="_blank" rel="noopener noreferrer" class="flex-1 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl text-xs font-semibold text-center flex items-center justify-center space-x-1 shadow-sm"><span>起動する</span><i class="fa-solid fa-play text-[10px]"></i></a></div></div>`;wireThumbnail(card.querySelector('.thumbnail-img'),card.querySelector('.thumb-fallback'),app);card.querySelector('.details-btn').addEventListener('click',()=>openModal(app.id));appsGrid.appendChild(card);});}
 
-    const appModal = document.getElementById('app-modal'); 
-    const modalTitle = document.getElementById('modal-title');
-    const modalDescription = document.getElementById('modal-description'); 
-    const modalBanner = document.getElementById('modal-banner');
-    const modalBannerIcon = document.getElementById('modal-banner-icon'); 
-    const modalTags = document.getElementById('modal-tags');
-    const modalLaunchLink = document.getElementById('modal-launch-link');
-
-    // カテゴリフィルターボタンの生成
-    function renderFilterButtons() {
-      const currentCategories = ['all', ...new Set(myApps.map(app => app.category))];
-      filterButtonsContainer.innerHTML = '';
-      currentCategories.forEach(cat => {
-        const isActive = currentFilter === cat;
-        const btn = document.createElement('button');
-        btn.className = `px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${isActive ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400 hover:bg-slate-200'}`;
-        btn.textContent = categoryLabels[cat] || cat;
-        btn.addEventListener('click', () => { currentFilter = cat; renderFilterButtons(); renderApps(); });
-        filterButtonsContainer.appendChild(btn);
-      });
-    }
-
-    // アプリカードの表示処理
-    function renderApps() {
-      appsGrid.innerHTML = '';
-      const filteredApps = myApps.filter(app => {
-        const matchesCategory = currentFilter === 'all' || app.category === currentFilter;
-        const combinedText = `${app.title} ${app.description} ${(app.tags || []).join(' ')}`.toLowerCase();
-        return matchesCategory && combinedText.includes(searchQuery.toLowerCase());
-      });
-
-      appCountBadge.innerHTML = `<i class="fa-solid fa-folder-open text-emerald-500 mr-1.5"></i>全 <strong>${myApps.length}</strong> 個 (表示中: ${filteredApps.length})`;
-
-      if (filteredApps.length === 0) {
-        appsGrid.classList.add('hidden'); noResults.classList.remove('hidden'); return;
-      }
-      appsGrid.classList.remove('hidden'); noResults.classList.add('hidden');
-
-      filteredApps.forEach(app => {
-        const card = document.createElement('div');
-        card.className = "group bg-white dark:bg-slate-800 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full";
-        
-        const tagsHtml = (app.tags || []).slice(0, 3).map(tag => `<span class="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">${tag}</span>`).join('');
-
-        card.innerHTML = `
-          <div class="h-32 bg-gradient-to-tr ${app.gradient || 'from-blue-600 to-indigo-600'} relative flex items-center justify-center">
-            <div class="w-14 h-14 rounded-2xl bg-white/15 backdrop-blur-md flex items-center justify-center text-white"><i class="${app.icon || 'fa-solid fa-cubes'} text-2xl"></i></div>
-            <span class="absolute top-3 right-3 px-2 py-0.5 rounded bg-black/20 text-white text-[10px]">${app.releaseDate || '2026'}</span>
-          </div>
-          <div class="p-5 flex-grow flex flex-col">
-            <div class="flex items-center space-x-1.5 mb-2">${tagsHtml}</div>
-            <h4 class="text-lg font-bold text-slate-900 dark:text-white mb-1.5 line-clamp-1">${app.title}</h4>
-            <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2 mb-4 flex-grow">${app.description}</p>
-            <div class="flex items-center space-x-2 pt-3 border-t border-slate-100 dark:border-slate-700/60">
-              <button class="details-btn flex-1 py-2 bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl text-xs font-semibold flex items-center justify-center space-x-1" data-id="${app.id}"><i class="fa-solid fa-circle-info"></i><span>詳細</span></button>
-              <a href="${app.path}" class="flex-1 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl text-xs font-semibold text-center flex items-center justify-center space-x-1"><span>起動する</span><i class="fa-solid fa-play text-[10px]"></i></a>
-            </div>
-          </div>
-        `;
-        card.querySelector('.details-btn').addEventListener('click', (e) => openModal(e.currentTarget.getAttribute('data-id')));
-        appsGrid.appendChild(card);
-      });
-    }
-
-    // 詳細モーダルの開閉
-    function openModal(appId) {
-      const app = myApps.find(a => a.id === appId); if (!app) return;
-      modalTitle.textContent = app.title; modalDescription.textContent = app.description; modalLaunchLink.href = app.path;
-      modalBanner.className = `h-40 bg-gradient-to-r ${app.gradient || 'from-blue-600 to-indigo-600'} flex items-center justify-center text-white relative`;
-      modalBannerIcon.className = `${app.icon || "fa-solid fa-cubes"} text-7xl opacity-30`;
-      modalTags.innerHTML = (app.tags || []).map(tag => `<span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-800/40">${tag}</span>`).join('');
-      appModal.classList.remove('hidden');
-      setTimeout(() => { appModal.classList.remove('opacity-0'); appModal.querySelector('div').className = appModal.querySelector('div').className.replace('scale-95', 'scale-100'); }, 50);
-    }
-
-    function closeModal() {
-      appModal.classList.add('opacity-0');
-      setTimeout(() => appModal.classList.add('hidden'), 300);
-    }
-    document.getElementById('modal-close').addEventListener('click', closeModal);
-    document.getElementById('modal-close-btn').addEventListener('click', closeModal);
-
-    // 検索入力イベント
-    searchInput.addEventListener('input', (e) => { searchQuery = e.target.value; renderApps(); });
-    
-    // 初期起動
-    window.addEventListener('DOMContentLoaded', () => { renderFilterButtons(); renderApps(); });
+    function openModal(id){const app=myApps.find(a=>a.id===id);if(!app)return;modalTitle.textContent=app.title;modalDescription.textContent=app.description;modalLaunchLink.href=app.path;modalFallback.className=`absolute inset-0 bg-gradient-to-r ${app.gradient||'from-blue-600 to-indigo-600'} flex items-center justify-center text-white transition-opacity duration-300`;modalBannerIcon.className=`${app.icon||'fa-solid fa-cubes'} text-7xl opacity-30`;modalTags.innerHTML=(app.tags||[]).map(tag=>`<span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-800/40">${escapeHtml(tag)}</span>`).join('');const fresh=modalThumbnail.cloneNode(false);modalThumbnail.replaceWith(fresh);modalThumbnail=fresh;modalThumbnail.id='modal-thumbnail';modalThumbnail.className='app-thumb absolute inset-0 w-full h-full object-cover object-top opacity-0';modalThumbnail.alt=`${app.title} の画面サムネイル`;modalThumbnail.hidden=true;wireThumbnail(modalThumbnail,modalFallback,app);appModal.classList.remove('hidden');requestAnimationFrame(()=>{appModal.classList.remove('opacity-0');modalPanel.classList.remove('scale-95');modalPanel.classList.add('scale-100');});document.body.classList.add('overflow-hidden');document.getElementById('modal-close').focus();}
+    function closeModal(){appModal.classList.add('opacity-0');modalPanel.classList.remove('scale-100');modalPanel.classList.add('scale-95');document.body.classList.remove('overflow-hidden');setTimeout(()=>appModal.classList.add('hidden'),250);}
+    document.getElementById('modal-close').addEventListener('click',closeModal);document.getElementById('modal-close-btn').addEventListener('click',closeModal);appModal.addEventListener('click',e=>{if(e.target===appModal)closeModal();});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!appModal.classList.contains('hidden'))closeModal();});
+    searchInput.addEventListener('input',e=>{searchQuery=e.target.value;clearSearch.classList.toggle('hidden',!searchQuery);renderApps();});clearSearch.addEventListener('click',()=>{searchInput.value='';searchQuery='';clearSearch.classList.add('hidden');searchInput.focus();renderApps();});sortSelect.addEventListener('change',e=>{currentSort=e.target.value;renderApps();});
+    window.addEventListener('DOMContentLoaded',async()=>{await loadThumbnailManifest();renderFilterButtons();renderApps();});
   </script>
 </body>
 </html>
