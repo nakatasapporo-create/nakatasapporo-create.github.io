@@ -6,6 +6,7 @@
   <meta name="description" content="NakataSapporoが生成AIとともに開発したWebアプリケーション集。">
   <meta name="theme-color" content="#2563eb">
   <title>NakataSapporo Presents My Web Apps Portfolio - アプリケーション一覧</title>
+  <!-- thumbnail-display-fix: 2026-09-01 -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -93,7 +94,7 @@
     <div id="modal-panel" class="bg-white dark:bg-slate-800 w-full max-w-3xl rounded-2xl shadow-xl overflow-hidden transform scale-95 transition-transform duration-300">
       <div class="relative h-56 sm:h-72 overflow-hidden bg-slate-100 dark:bg-slate-900">
         <div id="modal-fallback" class="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center text-white"><i id="modal-banner-icon" class="fa-solid fa-cubes text-7xl opacity-30"></i></div>
-        <img id="modal-thumbnail" alt="" class="app-thumb absolute inset-0 w-full h-full object-cover object-top opacity-0" hidden>
+        <img id="modal-thumbnail" alt="" class="app-thumb absolute inset-0 w-full h-full object-cover object-top opacity-0">
         <div class="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/10 pointer-events-none"></div>
         <button id="modal-close" class="absolute top-4 right-4 w-10 h-10 bg-slate-900/55 text-white rounded-full hover:bg-slate-900/75" aria-label="閉じる"><i class="fa-solid fa-xmark"></i></button>
       </div>
@@ -131,7 +132,43 @@
     function escapeHtml(value=''){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));}
     function getLocalThumbnail(app){const cache=thumbnailVersion?`?v=${encodeURIComponent(thumbnailVersion)}`:'';return `./thumbnails/${encodeURIComponent(app.id)}.jpg${cache}`;}
     function getRemoteThumbnail(app){return `${REMOTE_THUMBNAIL_BASE}${app.path}`;}
-    function wireThumbnail(img,fallbackLayer,app){let triedRemote=false;const reveal=()=>{img.hidden=false;img.classList.remove('opacity-0');fallbackLayer.classList.add('opacity-0');};img.addEventListener('load',reveal,{once:true});img.addEventListener('error',()=>{if(USE_REMOTE_THUMBNAIL_FALLBACK&&!triedRemote){triedRemote=true;img.src=getRemoteThumbnail(app);return;}img.hidden=true;fallbackLayer.classList.remove('opacity-0');});img.src=getLocalThumbnail(app);}
+    function wireThumbnail(img,fallbackLayer,app){
+      let triedRemote=false;
+
+      // hidden属性は使わず、opacityだけで表示を切り替えます。
+      // これにより loading="lazy" の画像も正常に読み込みが開始されます。
+      img.hidden=false;
+      img.classList.add('opacity-0');
+      fallbackLayer.classList.remove('opacity-0');
+
+      const reveal=()=>{
+        img.classList.remove('opacity-0');
+        fallbackLayer.classList.add('opacity-0');
+      };
+
+      const fail=()=>{
+        // ローカル画像がまだ無い場合のみ外部サムネイルへフォールバック
+        if(USE_REMOTE_THUMBNAIL_FALLBACK&&!triedRemote){
+          triedRemote=true;
+          img.src=getRemoteThumbnail(app);
+          return;
+        }
+
+        // どちらも取得できなければ従来のグラデーション＋アイコンを表示
+        img.classList.add('opacity-0');
+        fallbackLayer.classList.remove('opacity-0');
+      };
+
+      img.addEventListener('load',reveal);
+      img.addEventListener('error',fail);
+
+      img.src=getLocalThumbnail(app);
+
+      // キャッシュ済み画像ではloadイベントが先に完了している場合があるため保険を入れる
+      if(img.complete&&img.naturalWidth>0){
+        reveal();
+      }
+    }
     async function loadThumbnailManifest(){try{const r=await fetch('./thumbnails/manifest.json',{cache:'no-store'});if(!r.ok)return;const d=await r.json();thumbnailVersion=d.version||d.updatedAt||'';if(d.updatedAt){const date=new Date(d.updatedAt);if(!Number.isNaN(date.getTime()))thumbnailUpdated.textContent=`サムネイル更新: ${date.toLocaleString('ja-JP')}`;}}catch(_){}}
 
     function renderFilterButtons(){const categories=['all',...new Set(myApps.map(a=>a.category))];filterButtonsContainer.innerHTML='';categories.forEach(cat=>{const active=currentFilter===cat,btn=document.createElement('button');btn.type='button';btn.className=`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${active?'bg-blue-600 text-white shadow-sm':'bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600'}`;btn.textContent=categoryLabels[cat]||cat;btn.setAttribute('aria-pressed',active?'true':'false');btn.addEventListener('click',()=>{currentFilter=cat;renderFilterButtons();renderApps();});filterButtonsContainer.appendChild(btn);});}
@@ -140,14 +177,14 @@
     function renderApps(){appsGrid.innerHTML='';const filtered=getFilteredApps();appCountBadge.innerHTML=`<i class="fa-solid fa-folder-open text-emerald-500 mr-1.5"></i>全 <strong>${myApps.length}</strong> 個 (表示中: ${filtered.length})`;if(!filtered.length){appsGrid.classList.add('hidden');noResults.classList.remove('hidden');return;}appsGrid.classList.remove('hidden');noResults.classList.add('hidden');filtered.forEach(app=>{const card=document.createElement('article');card.className='app-card group bg-white dark:bg-slate-800 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full';const tags=(app.tags||[]).slice(0,3).map(tag=>`<span class="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">${escapeHtml(tag)}</span>`).join('');card.innerHTML=`
       <a href="${escapeHtml(app.path)}" target="_blank" rel="noopener noreferrer" class="relative block aspect-[16/10] overflow-hidden bg-slate-100 dark:bg-slate-900" aria-label="${escapeHtml(app.title)} を開く">
         <div class="thumb-fallback absolute inset-0 bg-gradient-to-tr ${app.gradient||'from-blue-600 to-indigo-600'} flex items-center justify-center transition-opacity duration-300"><div class="w-16 h-16 rounded-2xl bg-white/15 backdrop-blur-md flex items-center justify-center text-white shadow-lg"><i class="${app.icon||'fa-solid fa-cubes'} text-3xl"></i></div></div>
-        <img class="thumbnail-img app-thumb absolute inset-0 w-full h-full object-cover object-top opacity-0" alt="${escapeHtml(app.title)} の画面サムネイル" loading="lazy" decoding="async" hidden>
+        <img class="thumbnail-img app-thumb absolute inset-0 w-full h-full object-cover object-top opacity-0" alt="${escapeHtml(app.title)} の画面サムネイル" loading="lazy" decoding="async">
         <div class="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/5 opacity-60 group-hover:opacity-80 transition-opacity pointer-events-none"></div>
         <span class="absolute top-3 right-3 px-2 py-1 rounded-lg bg-black/55 backdrop-blur text-white text-[10px] shadow-sm">${escapeHtml(app.releaseDate||'2026')}</span>
         <span class="absolute bottom-3 right-3 px-3 py-1.5 rounded-full bg-white/90 dark:bg-slate-900/90 text-slate-700 dark:text-white text-xs font-bold shadow-md opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all">開く <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-[10px]"></i></span>
       </a>
       <div class="p-5 flex-grow flex flex-col"><div class="flex items-center space-x-1.5 mb-2">${tags}</div><h3 class="text-lg font-bold text-slate-900 dark:text-white mb-1.5 line-clamp-2">${escapeHtml(app.title)}</h3><p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-3 mb-4 flex-grow leading-relaxed">${escapeHtml(app.description)}</p><div class="flex items-center space-x-2 pt-3 border-t border-slate-100 dark:border-slate-700/60"><button class="details-btn flex-1 py-2.5 bg-slate-50 hover:bg-slate-100 dark:bg-slate-700/50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-xl text-xs font-semibold flex items-center justify-center space-x-1" data-id="${escapeHtml(app.id)}"><i class="fa-solid fa-circle-info"></i><span>詳細</span></button><a href="${escapeHtml(app.path)}" target="_blank" rel="noopener noreferrer" class="flex-1 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl text-xs font-semibold text-center flex items-center justify-center space-x-1 shadow-sm"><span>起動する</span><i class="fa-solid fa-play text-[10px]"></i></a></div></div>`;wireThumbnail(card.querySelector('.thumbnail-img'),card.querySelector('.thumb-fallback'),app);card.querySelector('.details-btn').addEventListener('click',()=>openModal(app.id));appsGrid.appendChild(card);});}
 
-    function openModal(id){const app=myApps.find(a=>a.id===id);if(!app)return;modalTitle.textContent=app.title;modalDescription.textContent=app.description;modalLaunchLink.href=app.path;modalFallback.className=`absolute inset-0 bg-gradient-to-r ${app.gradient||'from-blue-600 to-indigo-600'} flex items-center justify-center text-white transition-opacity duration-300`;modalBannerIcon.className=`${app.icon||'fa-solid fa-cubes'} text-7xl opacity-30`;modalTags.innerHTML=(app.tags||[]).map(tag=>`<span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-800/40">${escapeHtml(tag)}</span>`).join('');const fresh=modalThumbnail.cloneNode(false);modalThumbnail.replaceWith(fresh);modalThumbnail=fresh;modalThumbnail.id='modal-thumbnail';modalThumbnail.className='app-thumb absolute inset-0 w-full h-full object-cover object-top opacity-0';modalThumbnail.alt=`${app.title} の画面サムネイル`;modalThumbnail.hidden=true;wireThumbnail(modalThumbnail,modalFallback,app);appModal.classList.remove('hidden');requestAnimationFrame(()=>{appModal.classList.remove('opacity-0');modalPanel.classList.remove('scale-95');modalPanel.classList.add('scale-100');});document.body.classList.add('overflow-hidden');document.getElementById('modal-close').focus();}
+    function openModal(id){const app=myApps.find(a=>a.id===id);if(!app)return;modalTitle.textContent=app.title;modalDescription.textContent=app.description;modalLaunchLink.href=app.path;modalFallback.className=`absolute inset-0 bg-gradient-to-r ${app.gradient||'from-blue-600 to-indigo-600'} flex items-center justify-center text-white transition-opacity duration-300`;modalBannerIcon.className=`${app.icon||'fa-solid fa-cubes'} text-7xl opacity-30`;modalTags.innerHTML=(app.tags||[]).map(tag=>`<span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-800/40">${escapeHtml(tag)}</span>`).join('');const fresh=modalThumbnail.cloneNode(false);modalThumbnail.replaceWith(fresh);modalThumbnail=fresh;modalThumbnail.id='modal-thumbnail';modalThumbnail.className='app-thumb absolute inset-0 w-full h-full object-cover object-top opacity-0';modalThumbnail.alt=`${app.title} の画面サムネイル`;modalThumbnail.hidden=false;wireThumbnail(modalThumbnail,modalFallback,app);appModal.classList.remove('hidden');requestAnimationFrame(()=>{appModal.classList.remove('opacity-0');modalPanel.classList.remove('scale-95');modalPanel.classList.add('scale-100');});document.body.classList.add('overflow-hidden');document.getElementById('modal-close').focus();}
     function closeModal(){appModal.classList.add('opacity-0');modalPanel.classList.remove('scale-100');modalPanel.classList.add('scale-95');document.body.classList.remove('overflow-hidden');setTimeout(()=>appModal.classList.add('hidden'),250);}
     document.getElementById('modal-close').addEventListener('click',closeModal);document.getElementById('modal-close-btn').addEventListener('click',closeModal);appModal.addEventListener('click',e=>{if(e.target===appModal)closeModal();});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!appModal.classList.contains('hidden'))closeModal();});
     searchInput.addEventListener('input',e=>{searchQuery=e.target.value;clearSearch.classList.toggle('hidden',!searchQuery);renderApps();});clearSearch.addEventListener('click',()=>{searchInput.value='';searchQuery='';clearSearch.classList.add('hidden');searchInput.focus();renderApps();});sortSelect.addEventListener('change',e=>{currentSort=e.target.value;renderApps();});
