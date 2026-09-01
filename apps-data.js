@@ -4,7 +4,7 @@ const APP_DATA = [
     "id": "hiraganakatakana50on",
     "title": "ひらながカタカナボード",
     "description": "ひらがなとカタカナの文字を並べて音声で読み上げるアプリです。",
-    "category": "utility",
+    "category": "study",
     "tags": [
       "Utility"
     ],
@@ -17,7 +17,7 @@ const APP_DATA = [
     "id": "romaji",
     "title": "ローマ字学習ボード",
     "description": "小学3年生向けのヘボン式ローマ字を学べるボードです。",
-    "category": "utility",
+    "category": "study",
     "tags": [
       "Utility"
     ],
@@ -30,7 +30,7 @@ const APP_DATA = [
     "id": "bunkaigosei",
     "title": "１０までの数の分解・合成アプリ",
     "description": "10までの数を分解・合成する計算アプリです。イラストを操作して数を確認することもできます。",
-    "category": "utility",
+    "category": "study",
     "tags": [
       "Utility"
     ],
@@ -43,7 +43,7 @@ const APP_DATA = [
     "id": "tashizanhikizan",
     "title": "足し算引き算アプリ",
     "description": "20までの数と10までの数を、足し算と引き算する小学生低学年向けのアプリです。",
-    "category": "utility",
+    "category": "study",
     "tags": [
       "Utility"
     ],
@@ -95,7 +95,7 @@ const APP_DATA = [
     "id": "dochikana",
     "title": "二択選択アプリ",
     "description": "絵カードや写真カードを二択で選ぶ問題を作成できるシンプルなアプリです。特徴は問題を音声で読み上げてくれます。作った問題はエクスポートで保存でき、他の端末でもインポートすることができます。",
-    "category": "utility",
+    "category": "study",
     "tags": [
       "Utility"
     ],
@@ -225,7 +225,7 @@ const APP_DATA = [
     "id": "1nenkanji",
     "title": "小学１年生の漢字",
     "description": "小学１年生の漢字の一覧です。書き順を表示したり、読み方を音声で読み上げることができます。光村図書に準拠した順番になっているはずです。",
-    "category": "utility",
+    "category": "study",
     "tags": [
       "Utility"
     ],
@@ -238,7 +238,7 @@ const APP_DATA = [
     "id": "2nenkanji",
     "title": "小学２年生の漢字",
     "description": "小学２年生の漢字の一覧です。書き順を表示したり、読み方を音声で読み上げることができます。光村図書に準拠した順番になっているはずです。",
-    "category": "utility",
+    "category": "study",
     "tags": [
       "Utility"
     ],
@@ -251,7 +251,7 @@ const APP_DATA = [
     "id": "3nenkanji",
     "title": "小学３年生の漢字",
     "description": "小学３年生の漢字の一覧です。書き順を表示したり、読み方を音声で読み上げることができます。光村図書に準拠した順番になっているはずです。",
-    "category": "utility",
+    "category": "study",
     "tags": [
       "Utility"
     ],
@@ -277,7 +277,7 @@ const APP_DATA = [
     "id": "99mondai",
     "title": "９９の問題",
     "description": "９９の問題アプリです。段ごとに順番に問題を出すか、ランダムか選ぶことができます。問題と答えを音声で読み上げます。",
-    "category": "utility",
+    "category": "study",
     "tags": [
       "Utility"
     ],
@@ -290,7 +290,7 @@ const APP_DATA = [
     "id": "99master",
     "title": "９９マスター",
     "description": "９９の問題アプリです。１の段から順番に出る問題と、アトランダムで出る問題を選ぶことができます。",
-    "category": "utility",
+    "category": "study",
     "tags": [
       "Utility"
     ],
