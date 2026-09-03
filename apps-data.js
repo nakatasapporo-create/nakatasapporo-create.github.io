@@ -183,6 +183,19 @@ const APP_DATA = [
     "releaseDate": "2026-08"
   },
   {
+    "id": "mp3hensyu",
+    "title": "mp3ファイルやiPadのボイスメモのデータをトリミング＆フェードアウト＆ノーマライズする簡易アプリ",
+    "description": "iPadのm4aファイル、mp3ファイルを簡易編集します。",
+    "category": "utility",
+    "tags": [
+      "Utility"
+    ],
+    "icon": "fa-solid fa-chart-kanban",
+    "path": "https://nakatasapporo-create.github.io/mp3hensyu/",
+    "gradient": "from-blue-600 to-cyan-500",
+    "releaseDate": "2026-09"
+  },
+  {
     "id": "irogakuhu",
     "title": "色楽譜制作アプリ",
     "description": "簡単な楽譜を色楽譜にすることができるアプリです。",
