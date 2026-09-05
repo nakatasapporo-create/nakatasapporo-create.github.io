@@ -6,7 +6,7 @@ const APP_DATA = [
     "description": "ひらがなとカタカナの文字を並べて音声で読み上げるアプリです。",
     "category": "study",
     "tags": [
-      "Utility"
+      "study"
     ],
     "icon": "fa-solid fa-chart-kanban",
     "path": "https://nakatasapporo-create.github.io/50on/",
@@ -19,7 +19,7 @@ const APP_DATA = [
     "description": "小学3年生向けのヘボン式ローマ字を学べるボードです。",
     "category": "study",
     "tags": [
-      "Utility"
+      "study"
     ],
     "icon": "fa-solid fa-chart-kanban",
     "path": "https://nakatasapporo-create.github.io/romaji/",
@@ -32,7 +32,7 @@ const APP_DATA = [
     "description": "10までの数を分解・合成する計算アプリです。イラストを操作して数を確認することもできます。",
     "category": "study",
     "tags": [
-      "Utility"
+      "study"
     ],
     "icon": "fa-solid fa-chart-kanban",
     "path": "https://nakatasapporo-create.github.io/bunkaigosei/",
@@ -45,7 +45,7 @@ const APP_DATA = [
     "description": "20までの数と10までの数を、足し算と引き算する小学生低学年向けのアプリです。",
     "category": "study",
     "tags": [
-      "Utility"
+      "study"
     ],
     "icon": "fa-solid fa-chart-kanban",
     "path": "https://nakatasapporo-create.github.io/tashizanhikizan/",
@@ -64,6 +64,19 @@ const APP_DATA = [
     "path": "https://nakatasapporo-create.github.io/junban/",
     "gradient": "from-blue-600 to-cyan-500",
     "releaseDate": "2026-06"
+  },
+  {
+    "id": "tachi",
+    "title": "たっちで写真",
+    "description": "iPadの画面をタッチすると、あらかじめ選んでいた写真がどんどん表示されるアプリです。",
+    "category": "study",
+    "tags": [
+      "study"
+    ],
+    "icon": "fa-solid fa-chart-kanban",
+    "path": "https://nakatasapporo-create.github.io/tachi/",
+    "gradient": "from-blue-600 to-cyan-500",
+    "releaseDate": "2026-09"
   },
   {
     "id": "gakusyuhi",
@@ -97,7 +110,7 @@ const APP_DATA = [
     "description": "絵カードや写真カードを二択で選ぶ問題を作成できるシンプルなアプリです。特徴は問題を音声で読み上げてくれます。作った問題はエクスポートで保存でき、他の端末でもインポートすることができます。",
     "category": "study",
     "tags": [
-      "Utility"
+      "study"
     ],
     "icon": "fa-solid fa-chart-kanban",
     "path": "https://nakatasapporo-create.github.io/dochikana/",
@@ -225,9 +238,9 @@ const APP_DATA = [
     "id": "speaktokei",
     "title": "しゃべるデジタル時計",
     "description": "タッチすると時間を話してくれるシンプルなしゃべるデジタル時計です。",
-    "category": "utility",
+    "category": "study",
     "tags": [
-      "Utility"
+      "study"
     ],
     "icon": "fa-solid fa-chart-kanban",
     "path": "https://nakatasapporo-create.github.io/speaktokei/",
@@ -240,7 +253,7 @@ const APP_DATA = [
     "description": "小学１年生の漢字の一覧です。書き順を表示したり、読み方を音声で読み上げることができます。光村図書に準拠した順番になっているはずです。",
     "category": "study",
     "tags": [
-      "Utility"
+      "study"
     ],
     "icon": "fa-solid fa-chart-kanban",
     "path": "https://nakatasapporo-create.github.io/1nenkanji/",
@@ -253,7 +266,7 @@ const APP_DATA = [
     "description": "小学２年生の漢字の一覧です。書き順を表示したり、読み方を音声で読み上げることができます。光村図書に準拠した順番になっているはずです。",
     "category": "study",
     "tags": [
-      "Utility"
+      "study"
     ],
     "icon": "fa-solid fa-chart-kanban",
     "path": "https://nakatasapporo-create.github.io/2nenkanji/",
@@ -266,7 +279,7 @@ const APP_DATA = [
     "description": "小学３年生の漢字の一覧です。書き順を表示したり、読み方を音声で読み上げることができます。光村図書に準拠した順番になっているはずです。",
     "category": "study",
     "tags": [
-      "Utility"
+      "study"
     ],
     "icon": "fa-solid fa-chart-kanban",
     "path": "https://nakatasapporo-create.github.io/3nenkanji/",
@@ -277,9 +290,9 @@ const APP_DATA = [
     "id": "kutouten",
     "title": "句読点の学習",
     "description": "小学生向けの句読点を学べるアプリです。",
-    "category": "utility",
+    "category": "study",
     "tags": [
-      "Utility"
+      "study"
     ],
     "icon": "fa-solid fa-chart-kanban",
     "path": "https://nakatasapporo-create.github.io/kutouten/",
@@ -292,7 +305,7 @@ const APP_DATA = [
     "description": "９９の問題アプリです。段ごとに順番に問題を出すか、ランダムか選ぶことができます。問題と答えを音声で読み上げます。",
     "category": "study",
     "tags": [
-      "Utility"
+      "study"
     ],
     "icon": "fa-solid fa-chart-kanban",
     "path": "https://nakatasapporo-create.github.io/99mondai/",
@@ -305,7 +318,7 @@ const APP_DATA = [
     "description": "９９の問題アプリです。１の段から順番に出る問題と、アトランダムで出る問題を選ぶことができます。",
     "category": "study",
     "tags": [
-      "Utility"
+      "study"
     ],
     "icon": "fa-solid fa-chart-kanban",
     "path": "https://nakatasapporo-create.github.io/99master/",
