@@ -66,6 +66,19 @@ const APP_DATA = [
     "releaseDate": "2026-06"
   },
   {
+    "id": "voice-change",
+    "title": "ボイスチェンジャー",
+    "description": "子ども向けの楽しいボイスチェンジャーアプリです。声変した音声を保存することもできます。",
+    "category": "utility",
+    "tags": [
+      "Utility"
+    ],
+    "icon": "fa-solid fa-chart-kanban",
+    "path": "https://nakatasapporo-create.github.io/Voice-change/",
+    "gradient": "from-blue-600 to-cyan-500",
+    "releaseDate": "2026-09"
+  },
+  {
     "id": "tachi",
     "title": "たっちで写真",
     "description": "iPadの画面をタッチすると、あらかじめ選んでいた写真がどんどん表示されるアプリです。",
