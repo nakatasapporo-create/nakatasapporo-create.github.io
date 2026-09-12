@@ -183,6 +183,19 @@ const APP_DATA = [
     "releaseDate": "2026-06"
   },
   {
+    "id": "movtomp4",
+    "title": "movファイルをmp4ファイルへ変換アプリ",
+    "description": "iPadのmov動画ファイルをWindows用のmp4動画ファイルへ変換します。",
+    "category": "utility",
+    "tags": [
+      "Utility"
+    ],
+    "icon": "fa-solid fa-chart-kanban",
+    "path": "https://nakatasapporo-create.github.io/movtomp4/",
+    "gradient": "from-blue-600 to-cyan-500",
+    "releaseDate": "2026-09"
+  },
+  {
     "id": "m4atomp3",
     "title": "iPadのボイスメモのデータをmp3へ変換するアプリ",
     "description": "iPadのm4aファイルをmp3へ変換します。",
