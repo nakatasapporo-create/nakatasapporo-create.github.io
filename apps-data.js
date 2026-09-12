@@ -339,6 +339,19 @@ const APP_DATA = [
     "releaseDate": "2026-08"
   },
   {
+    "id": "99yomiage",
+    "title": "９９の読み上げ",
+    "description": "９９を順番に読み上げてくれるアプリです。スピードも変えることができます。",
+    "category": "study",
+    "tags": [
+      "study"
+    ],
+    "icon": "fa-solid fa-chart-kanban",
+    "path": "https://nakatasapporo-create.github.io/99yomiage/",
+    "gradient": "from-blue-600 to-cyan-500",
+    "releaseDate": "2026-09"
+  },
+  {
     "id": "schoolcalendar",
     "title": "見通しカレンダー",
     "description": "一週間の学校生活の見通しをもてるように作成したカレンダーです。好きなイラストを追加できます。先生モードのパスワードは「1234」です。",
