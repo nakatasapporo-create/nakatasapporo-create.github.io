@@ -235,6 +235,19 @@ const APP_DATA = [
     "releaseDate": "2026-09"
   },
   {
+    "id": "multi",
+    "title": "簡易型マルチトラックエディタ",
+    "description": "音楽ファイルに３つの音声ファイルをかぶせることができるiPad用簡易型マルチトラックエディタアプリです。学習発表会などで使うことを想定しています。",
+    "category": "utility",
+    "tags": [
+      "Utility"
+    ],
+    "icon": "fa-solid fa-chart-kanban",
+    "path": "https://nakatasapporo-create.github.io/multitrack/",
+    "gradient": "from-blue-600 to-cyan-500",
+    "releaseDate": "2026-09"
+  },
+  {
     "id": "irogakuhu",
     "title": "色楽譜制作アプリ",
     "description": "簡単な楽譜を色楽譜にすることができるアプリです。",
