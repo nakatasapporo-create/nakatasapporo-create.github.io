@@ -223,8 +223,8 @@ const APP_DATA = [
   },
   {
     "id": "mp3hensyu",
-    "title": "mp3ファイルやiPadのボイスメモのデータをトリミング＆フェードアウト＆ノーマライズする簡易アプリ",
-    "description": "iPadのm4aファイル、mp3ファイルを簡易編集します。",
+    "title": "音楽、音声（m4a、mp3）ファイル簡易編集アプリ",
+    "description": "mp3ファイルやiPadのボイスメモのデータをトリミング、カット＆フェードアウト＆ノーマライズする音楽、音声編集アプリです。",
     "category": "utility",
     "tags": [
       "Utility"
@@ -235,7 +235,7 @@ const APP_DATA = [
     "releaseDate": "2026-09"
   },
   {
-    "id": "multi",
+    "id": "multitrack",
     "title": "簡易型マルチトラックエディタ",
     "description": "音楽ファイルに３つの音声ファイルをかぶせることができるiPad用簡易型マルチトラックエディタアプリです。学習発表会などで使うことを想定しています。",
     "category": "utility",
