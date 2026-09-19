@@ -170,6 +170,19 @@ const APP_DATA = [
     "releaseDate": "2026-08"
   },
   {
+    "id": "pdfpress",
+    "title": "PDFファイルを圧縮、または分割",
+    "description": "PDFファイルを圧縮し、サイズを小さくします。または、1ファイルが３MB以下になるように自動分割します。",
+    "category": "utility",
+    "tags": [
+      "Utility"
+    ],
+    "icon": "fa-solid fa-chart-kanban",
+    "path": "https://nakatasapporo-create.github.io/pdfpress/",
+    "gradient": "from-blue-600 to-cyan-500",
+    "releaseDate": "2026-09"
+  },
+  {
     "id": "audiospeedchanger",
     "title": "オーディオスピードチェンジャー",
     "description": "音楽ファイルを音程を変えずにスピードを変えるアプリです。",
