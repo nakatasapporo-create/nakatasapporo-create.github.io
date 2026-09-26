@@ -300,6 +300,19 @@ const APP_DATA = [
     "releaseDate": "2026-06"
   },
   {
+    "id": "tokeinotabi",
+    "title": "とけいのたび",
+    "description": "何分後、または、何分前を学習する小学３年生算数アプリです。",
+    "category": "study",
+    "tags": [
+      "study"
+    ],
+    "icon": "fa-solid fa-chart-kanban",
+    "path": "https://nakatasapporo-create.github.io/tokeinotabi/",
+    "gradient": "from-blue-600 to-cyan-500",
+    "releaseDate": "2026-09"
+  },
+  {
     "id": "1nenkanji",
     "title": "小学１年生の漢字",
     "description": "小学１年生の漢字の一覧です。書き順を表示したり、読み方を音声で読み上げることができます。光村図書に準拠した順番になっているはずです。",
