@@ -261,6 +261,19 @@ const APP_DATA = [
     "releaseDate": "2026-09"
   },
   {
+    "id": "movie",
+    "title": "簡易動画トリミング&カットツール",
+    "description": "短い動画ファイルをトリミングしたり、途中カットしたりできるアプリです。WindowsPCでの操作を想定していますが、タブレットでも動作します。",
+    "category": "utility",
+    "tags": [
+      "Utility"
+    ],
+    "icon": "fa-solid fa-chart-kanban",
+    "path": "https://nakatasapporo-create.github.io/movie/",
+    "gradient": "from-blue-600 to-cyan-500",
+    "releaseDate": "2026-10"
+  },
+  {
     "id": "irogakuhu",
     "title": "色楽譜制作アプリ",
     "description": "簡単な楽譜を色楽譜にすることができるアプリです。",
