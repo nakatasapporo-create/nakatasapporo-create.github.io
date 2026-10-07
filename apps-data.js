@@ -13,6 +13,19 @@ const APP_DATA = [
     "gradient": "from-blue-600 to-cyan-500",
     "releaseDate": "2026-06"
   },
+   {
+    "id": "nazori",
+    "title": "ひらがな、カタカナ、数字のなぞり",
+    "description": "ひらがな、カタカナ、数字のなぞりアプリです。書き順をアニメーションで表示する機能もあります。オフライン対応版です。",
+    "category": "study",
+    "tags": [
+      "study"
+    ],
+    "icon": "fa-solid fa-chart-kanban",
+    "path": "https://nakatasapporo-create.github.io/nazori/",
+    "gradient": "from-blue-600 to-cyan-500",
+    "releaseDate": "2026-10"
+  },
   {
     "id": "romaji",
     "title": "ローマ字学習ボード",
