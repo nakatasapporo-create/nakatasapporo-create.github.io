@@ -391,6 +391,19 @@ const APP_DATA = [
     "releaseDate": "2026-08"
   },
   {
+    "id": "huwahuwa",
+    "title": "チクチクとふわふわ",
+    "description": "小学生低学年向けのチクチク言葉とふわふわ言葉を学べるアプリです。",
+    "category": "study",
+    "tags": [
+      "study"
+    ],
+    "icon": "fa-solid fa-chart-kanban",
+    "path": "https://nakatasapporo-create.github.io/huwahuwa/",
+    "gradient": "from-blue-600 to-cyan-500",
+    "releaseDate": "2026-10"
+  },
+  {
     "id": "99mondai",
     "title": "９９の問題",
     "description": "９９の問題アプリです。段ごとに順番に問題を出すか、ランダムか選ぶことができます。問題と答えを音声で読み上げます。",
