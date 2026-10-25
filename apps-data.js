@@ -40,6 +40,19 @@ const APP_DATA = [
     "releaseDate": "2026-10"
   },
   {
+    "id": "sakana",
+    "title": "文字並べ",
+    "description": "魚の絵を使ったひらがなの文字並べアプリです。オフライン対応版です。最初の１回Wi-Fiに接続してください。",
+    "category": "study",
+    "tags": [
+      "study"
+    ],
+    "icon": "fa-solid fa-chart-kanban",
+    "path": "https://nakatasapporo-create.github.io/sakana/",
+    "gradient": "from-blue-600 to-cyan-500",
+    "releaseDate": "2026-10"
+  },
+  {
     "id": "romaji",
     "title": "ローマ字学習ボード",
     "description": "小学3年生向けのヘボン式ローマ字を学べるボードです。",
