@@ -42,7 +42,7 @@ const APP_DATA = [
   {
     "id": "sakana",
     "title": "文字並べ",
-    "description": "魚の絵を使ったひらがなの文字並べアプリです。オフライン対応版です。最初の１回Wi-Fiに接続してください。",
+    "description": "魚の絵を使ったカタカナの文字並べアプリです。オフライン対応版です。最初の１回Wi-Fiに接続してください。",
     "category": "study",
     "tags": [
       "study"
